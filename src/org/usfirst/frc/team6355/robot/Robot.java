@@ -72,25 +72,10 @@ public class Robot extends IterativeRobot {
         if (isOperatorControl() && isEnabled()) {
             differentialDrive.arcadeDrive(xboxController.getY(GenericHID.Hand.kLeft), -xboxController.getX(GenericHID.Hand.kLeft));
         }
-//        if (joystick.getRawButton(SHIFT_BUTTON))
         solenoid.set(xboxController.getXButton());
         
         lift.set(xboxController.getY(GenericHID.Hand.kRight));
-//        System.out.println(xboxController.getTriggerAxis(GenericHID.Hand.kLeft));
         System.out.println(xboxController.getY(GenericHID.Hand.kRight));
-//        if (xboxController.getYButton())
-//        {
-//            lift.set(0.1);
-//        }
-//        lift.set()
-//        if (xboxController.getAButton())
-//        {
-//            solenoid.set(true);
-//        }
-//        else
-//        {
-//            solenoid.set(false);    
-//        }
     }
 
 }
