@@ -160,6 +160,7 @@ public class Robot extends IterativeRobot {
         lift.set(xboxController.getY(GenericHID.Hand.kRight));
 //        System.out.println(xboxController.getY(GenericHID.Hand.kRight));
         
+        
 	Scheduler.getInstance().run();
 
     }
