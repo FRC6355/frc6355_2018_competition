@@ -155,7 +155,6 @@ public class Robot extends IterativeRobot {
         }
         solenoid.set(xboxController.getXButton());
         collector_release.set(xboxController.getBButton());
-//        System.out.println("button state");
 //        System.out.println(oi.joystick.getRawButton(11));
         System.out.println(pdp.getCurrent(7));
         lift.set(xboxController.getY(GenericHID.Hand.kRight));
