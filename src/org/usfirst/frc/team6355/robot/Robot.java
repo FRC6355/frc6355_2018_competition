@@ -3,6 +3,8 @@ package org.usfirst.frc.team6355.robot;
 import org.usfirst.frc.team6355.robot.commands.CollectorBackwardCommand;
 import org.usfirst.frc.team6355.robot.commands.CollectorForwardCommand;
 import org.usfirst.frc.team6355.robot.commands.LedWallSponsors;
+import org.usfirst.frc.team6355.robot.commands.LiftDownCommand;
+import org.usfirst.frc.team6355.robot.commands.LiftUpCommand;
 import org.usfirst.frc.team6355.robot.commands.PitchDownCommand;
 import org.usfirst.frc.team6355.robot.commands.PitchUpCommand;
 
@@ -45,7 +47,6 @@ public class Robot extends IterativeRobot {
     private static final int RIGHT_2_VICTOR_CAN_ID = 4;
     private static final int RIGHT_3_VICTOR_CAN_ID = 6;
 
-    private static final int LIFT_VICTOR_CAN_ID = 7;
     
     private static final int PURPLE_BOX_PURPLE = 1;
     private static final int BUTTON_BOX_RED = 2;
@@ -60,10 +61,14 @@ public class Robot extends IterativeRobot {
     
     
     private static final int SHIFT_BUTTON = 5;
-	private static final int PITCH_UP_BUTTON = 6;
-	    private static final int PITCH_DOWN_BUTTON = 4;
-	    private static final int COLLECTOR_FORWARD_BUTTON = 12;
-	    private static final int COLLECTOR_BACKWARD_BUTTON = 11;
+    private static final int COLLECTOR_RELEASE_BUTTON = 3;
+    private static final int PITCH_UP_BUTTON = 6;
+    private static final int PITCH_DOWN_BUTTON = 4;
+    private static final int COLLECTOR_FORWARD_BUTTON = 12;
+    private static final int COLLECTOR_BACKWARD_BUTTON = 11;
+
+    private static final int LIFT_UP_BUTTON = 7;
+    private static final int LIFT_DOWN_BUTTON = 8;
 
 //
     
@@ -93,15 +98,17 @@ public class Robot extends IterativeRobot {
     
     public static OI oi;
     
-    private Boolean compressor = true ;
+    private Boolean compressor = false ;
 
     private JoystickButton shiftButton;
     private JoystickButton pitchUpButton, pitchDownButton;
+    private JoystickButton liftUpButton, liftDownButton;
     private JoystickButton collectorForwardButton, collectorBackwardButton;
 
 
     @Override
     public void robotInit() {
+	RobotMap.init();
 
 //        left1 = new PWMVictorSPX(LEFT_1_VICTOR_PORT);
 //        left1.setInverted(false);
@@ -147,7 +154,6 @@ public class Robot extends IterativeRobot {
         right3 = new WPI_VictorSPX(RIGHT_3_VICTOR_CAN_ID);
         right3.setInverted(true);
 
-        lift = new WPI_VictorSPX(LIFT_VICTOR_PORT);
 
         
         leftDrive = new SpeedControllerGroup(left1, left2, left3);
@@ -173,6 +179,9 @@ public class Robot extends IterativeRobot {
         pitchUpButton = new JoystickButton(joystick, PITCH_UP_BUTTON);
         pitchDownButton = new JoystickButton(joystick, PITCH_DOWN_BUTTON);
 
+        liftUpButton = new JoystickButton(joystick, LIFT_UP_BUTTON);
+        liftDownButton = new JoystickButton(joystick, LIFT_DOWN_BUTTON);
+
         collectorForwardButton = new JoystickButton(joystick, COLLECTOR_FORWARD_BUTTON);
         collectorBackwardButton = new JoystickButton(joystick, COLLECTOR_BACKWARD_BUTTON);
         
@@ -181,6 +190,9 @@ public class Robot extends IterativeRobot {
 
         collectorForwardButton.whileHeld(new CollectorForwardCommand());
         collectorBackwardButton.whileHeld(new CollectorBackwardCommand());
+
+        liftUpButton.whileHeld(new LiftUpCommand());
+        liftDownButton.whileHeld(new LiftDownCommand());
 
 	pdp = new PowerDistributionPanel();
 	
@@ -292,12 +304,12 @@ public class Robot extends IterativeRobot {
         
         // Collect
 //            collector_release.set(xboxController.getBButton());
-            collector_release.set(joystick.getRawButton(SHIFT_BUTTON));
+            collector_release.set(joystick.getRawButton(COLLECTOR_RELEASE_BUTTON));
 
         }
         
         // Lift
-        lift.set(xboxController.getY(GenericHID.Hand.kRight));
+//        lift.set(xboxController.getY(GenericHID.Hand.kRight));
 
         //        System.out.println(oi.joystick.getRawButton(11));
         System.out.println(pdp.getCurrent(1));

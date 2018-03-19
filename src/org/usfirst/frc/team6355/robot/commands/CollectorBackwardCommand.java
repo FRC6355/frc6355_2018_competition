@@ -17,7 +17,7 @@ public class CollectorBackwardCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	RobotMap.collector.set(-1.0);
+	RobotMap.collector.set(-RobotMap.COLLECTOR_SPEED);
 	System.out.println("CollectorBackwardCommand init");
     }
 
@@ -40,5 +40,6 @@ public class CollectorBackwardCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+	RobotMap.collector.set(0.0);
     }
 }

@@ -28,14 +28,20 @@ public class RobotMap {
 	
 	public static WPI_VictorSPX collector;
 	public static WPI_VictorSPX pitch;
-	    private static final int COLLECTOR_VICTOR_CAN_ID = 8;
-	    private static final int PITCH_VICTOR_CAN_ID = 5;
+	public static WPI_VictorSPX lift;
+	private static final int COLLECTOR_VICTOR_CAN_ID = 8;
+	private static final int PITCH_VICTOR_CAN_ID = 5;
+	private static final int LIFT_VICTOR_CAN_ID = 7;
+
+	public static double COLLECTOR_SPEED = 1.0;
+	public static double PITCH_SPEED = 0.5;
+	public static double LIFT_SPEED = 0.75;
 
 	public static void init() {
 		
 	        collector = new WPI_VictorSPX(COLLECTOR_VICTOR_CAN_ID);
 	        pitch = new WPI_VictorSPX(PITCH_VICTOR_CAN_ID);
-
+	        lift = new WPI_VictorSPX(LIFT_VICTOR_CAN_ID);
 
 		
 	}

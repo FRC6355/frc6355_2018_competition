@@ -17,7 +17,7 @@ public class PitchDownCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	RobotMap.pitch.set(-1.0);
+	RobotMap.pitch.set(-RobotMap.PITCH_SPEED);
 	System.out.println("PitchDownCommand init");
     }
 
@@ -40,5 +40,6 @@ public class PitchDownCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+	RobotMap.pitch.set(0.0);
     }
 }
