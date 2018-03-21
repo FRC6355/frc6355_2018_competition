@@ -8,6 +8,10 @@ package org.usfirst.frc.team6355.robot;
 //import edu.wpi.first.wpilibj.VictorSP;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -26,9 +30,25 @@ public class RobotMap {
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
 	
-	public static WPI_VictorSPX collector;
-	public static WPI_VictorSPX pitch;
-	public static WPI_VictorSPX lift;
+    	// Drive
+	private static final int LEFT_1_VICTOR_CAN_ID = 9;
+	private static final int LEFT_2_VICTOR_CAN_ID = 1;
+	private static final int LEFT_3_VICTOR_CAN_ID = 2;
+	    
+	private static final int RIGHT_1_VICTOR_CAN_ID = 3;
+	private static final int RIGHT_2_VICTOR_CAN_ID = 4;
+	private static final int RIGHT_3_VICTOR_CAN_ID = 6;
+
+	public static WPI_VictorSPX left1, left2, left3;
+	public static WPI_VictorSPX right1, right2, right3;
+	public static WPI_VictorSPX lift, collector, pitch;
+	    
+	public static SpeedControllerGroup leftDrive;
+	public static SpeedControllerGroup rightDrive;
+
+	public static DifferentialDrive differentialDrive;
+
+	// Non-drive motors
 	private static final int COLLECTOR_VICTOR_CAN_ID = 8;
 	private static final int PITCH_VICTOR_CAN_ID = 5;
 	private static final int LIFT_VICTOR_CAN_ID = 7;
@@ -36,6 +56,13 @@ public class RobotMap {
 	public static double COLLECTOR_SPEED = 1.0;
 	public static double PITCH_SPEED = 0.5;
 	public static double LIFT_SPEED = 0.75;
+	
+	// Pneumatics
+	public static Boolean compressor = false ;
+	private static final int SHIFTER_SOLENOID_ID = 0 ;
+	private static final int COLLECTOR_RELEASE_SOLENOID_ID = 1 ;
+	public static Solenoid collector_release;
+	public static Solenoid solenoid;
 
 	public static void init() {
 		
@@ -43,6 +70,30 @@ public class RobotMap {
 	        pitch = new WPI_VictorSPX(PITCH_VICTOR_CAN_ID);
 	        lift = new WPI_VictorSPX(LIFT_VICTOR_CAN_ID);
 
-		
+	        left1 = new WPI_VictorSPX(LEFT_1_VICTOR_CAN_ID);
+	        left1.setInverted(false);
+	        left2 = new WPI_VictorSPX(LEFT_2_VICTOR_CAN_ID);
+	        left2.setInverted(true);
+	        left3 = new WPI_VictorSPX(LEFT_3_VICTOR_CAN_ID);
+	        left3.setInverted(true);
+	        right1 = new WPI_VictorSPX(RIGHT_1_VICTOR_CAN_ID);
+	        right1.setInverted(false);
+	        right2 = new WPI_VictorSPX(RIGHT_2_VICTOR_CAN_ID);
+	        right2.setInverted(true);
+	        right3 = new WPI_VictorSPX(RIGHT_3_VICTOR_CAN_ID);
+	        right3.setInverted(true);
+
+	        leftDrive = new SpeedControllerGroup(left1, left2, left3);
+	        rightDrive = new SpeedControllerGroup(right1, right2, right3);
+
+	        differentialDrive = new DifferentialDrive(leftDrive, rightDrive);
+	        
+	        // Solenoids
+	        if (compressor)
+	        {
+	            solenoid = new Solenoid(SHIFTER_SOLENOID_ID);
+	            collector_release = new Solenoid(COLLECTOR_RELEASE_SOLENOID_ID);
+	        }
+
 	}
 }
