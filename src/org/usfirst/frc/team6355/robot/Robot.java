@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 @SuppressWarnings("deprecation")
@@ -25,12 +26,15 @@ public class Robot extends IterativeRobot {
     private Encoder right_encoder;
     
     AHRS ahrs;
+    
+    Gyro gyro;
 
     @Override
     public void robotInit() {
 	RobotMap.init();
         
 	pdp = new PowerDistributionPanel();
+	pdp.resetTotalEnergy();
 	
 	// OI must be constructed after subsystems. If the OI creates Commands
 	// (which it very likely will), subsystems are not guaranteed to be
@@ -79,7 +83,15 @@ public class Robot extends IterativeRobot {
 	
 	double angle = ahrs.getAngle();
 	System.out.println("angle: " + angle);
+	System.out.println("pdp temp: " + pdp.getTemperature());
+	System.out.println("pdp total current: " + pdp.getTotalCurrent());
+	System.out.println("pdp total energy: " + pdp.getTotalEnergy());
+	System.out.println("pdp total power: " + pdp.getTotalPower());
+	System.out.println("pdp voltage: " + pdp.getVoltage());
+	System.out.println("gyro: " + gyro.getAngle());
 	
+//	pdp.getTemperature();
+
 	
 	
 	// Drive

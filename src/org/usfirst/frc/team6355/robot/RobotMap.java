@@ -38,6 +38,8 @@ public class RobotMap {
 	private static final int RIGHT_1_VICTOR_CAN_ID = 3;
 	private static final int RIGHT_2_VICTOR_CAN_ID = 4;
 	private static final int RIGHT_3_VICTOR_CAN_ID = 6;
+	
+	private static final double DRIVE_MOTOR_OPEN_LOOP_RAMP = 1.0 ;
 
 	public static WPI_VictorSPX left1, left2, left3;
 	public static WPI_VictorSPX right1, right2, right3;
@@ -53,7 +55,8 @@ public class RobotMap {
 	private static final int PITCH_VICTOR_CAN_ID = 5;
 	private static final int LIFT_VICTOR_CAN_ID = 7;
 
-	public static double COLLECTOR_SPEED = 1.0;
+	public static double COLLECTOR_SPEED_BACKWARD = 0.5;
+	public static double COLLECTOR_SPEED_FORWARD = 1.0;
 	public static double PITCH_SPEED = 0.5;
 	public static double LIFT_SPEED = 0.75;
 	
@@ -69,6 +72,7 @@ public class RobotMap {
 	        collector = new WPI_VictorSPX(COLLECTOR_VICTOR_CAN_ID);
 	        pitch = new WPI_VictorSPX(PITCH_VICTOR_CAN_ID);
 	        lift = new WPI_VictorSPX(LIFT_VICTOR_CAN_ID);
+	        lift.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 
 	        left1 = new WPI_VictorSPX(LEFT_1_VICTOR_CAN_ID);
 	        left1.setInverted(false);
@@ -82,7 +86,13 @@ public class RobotMap {
 	        right2.setInverted(true);
 	        right3 = new WPI_VictorSPX(RIGHT_3_VICTOR_CAN_ID);
 	        right3.setInverted(true);
-
+	        left1.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+	        left2.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+	        left3.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+	        right1.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+	        right2.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+	        right3.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+	        
 	        leftDrive = new SpeedControllerGroup(left1, left2, left3);
 	        rightDrive = new SpeedControllerGroup(right1, right2, right3);
 
