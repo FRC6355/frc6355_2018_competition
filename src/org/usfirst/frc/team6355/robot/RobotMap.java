@@ -61,7 +61,7 @@ public class RobotMap {
 	public static double LIFT_SPEED = 0.75;
 	
 	// Pneumatics
-	public static Boolean compressor = false ;
+	public static Boolean compressor = true ;
 	private static final int SHIFTER_SOLENOID_ID = 0 ;
 	private static final int COLLECTOR_RELEASE_SOLENOID_ID = 1 ;
 	public static Solenoid collector_release;
