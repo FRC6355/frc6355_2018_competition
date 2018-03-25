@@ -87,7 +87,7 @@ public class Robot extends IterativeRobot {
 //	System.out.println("right: " + right_encoder.getDistance());
 	
 	double angle = ahrs.getAngle();
-	System.out.println("angle: " + angle);
+	System.out.println("=====================angle: " + angle);
 	System.out.println("pdp temp: " + pdp.getTemperature());
 	System.out.println("pdp total current: " + pdp.getTotalCurrent());
 	System.out.println("pdp total energy: " + pdp.getTotalEnergy());
@@ -115,13 +115,46 @@ public class Robot extends IterativeRobot {
         }
         
         OI.led_wall_selection();
+
+        System.out.println("POV:" + oi.joystick.getPOV());
+        
+//        int pov = oi.buttonBox.getPOV();
+          int pov = oi.joystick.getPOV();
+        
+//        System.out.println("getDirectionDegrees:" + oi.buttonBox.getDirectionDegrees());
+
+        
+        if (pov == 90)
+        {
+            if (RobotMap.camera_angle + RobotMap.CAMERA_ANGLE_INC < 210.0 )
+            {
+        	RobotMap.camera_angle += RobotMap.CAMERA_ANGLE_INC;
+        	RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
+            }
+        }
+        else if (pov == 270)
+    	{
+            if (RobotMap.camera_angle - RobotMap.CAMERA_ANGLE_INC > 45.0 )
+            {
+        	RobotMap.camera_angle -= RobotMap.CAMERA_ANGLE_INC;
+        	RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
+            }
+    	}
+        else if (pov == 0)
+    	{
+            RobotMap.camera_angle = 111.0 ;
+	    RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
+    	}
+        
+        System.out.println("camera ```````````````````" + RobotMap.camera_angle);
                 
 	Scheduler.getInstance().run();
 
     }
     
     
-	public void autonomousInit() {
+    @Override
+    public void autonomousInit() {
 	    
 	    String gameData;
 	    gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -155,12 +188,32 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during autonomous
 	 */
-	public void autonomousPeriodic() {
+    	@Override
+    	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 	}
 
+        @Override
+        public void disabledInit() 
+	{
+	    // Users should override this method for initialization code which 
+	    // will be called the first time that the robot enters disabled mode. 
+	    // This function will be called one time when the robot first enters disabled mode.
+	    System.out.println("Robot.disabledInit()");
+	}
+        
+        @Override
+        public void disabledPeriodic() 
+	{
+	    // Users should override this method for code which will be called
+	    // periodically at a regular rate while the robot is in disabled mode.
+//	     System.out.println("Robot.disabledPeriodic()");
+	}
+	public void robotPeriodic() 
+	{
+//	     System.out.println("Robot.robotPeriodic()");
+	}
 
-    
     
     
 }

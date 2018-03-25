@@ -76,8 +76,8 @@ public class RobotMap {
 	public static Solenoid solenoid;
 	
 	public static Servo cameraServo;
-	public static double camera_angle = 0.0 ;
-	public static double CAMERA_ANGLE_INC = 1.0 ;
+	public static double camera_angle = 100.0 ;
+	public static double CAMERA_ANGLE_INC = 2.0 ;
 
 
 	public static void init() {
@@ -139,7 +139,9 @@ public class RobotMap {
 
 	        // Get the current value so that it doesn't move right away when
 	        //   camera moving commands start
+//	        cameraServo.setAngle(100.0);
 	        RobotMap.camera_angle = cameraServo.getAngle();
+	        cameraServo.setAngle(RobotMap.camera_angle);
 	        
 	        LiveWindow.addActuator("DriveTrain", "right1", (WPI_VictorSPX) right1);
 	        LiveWindow.addSensor("DriveTrain", "leftDriveTrainEncoder", left_encoder);
