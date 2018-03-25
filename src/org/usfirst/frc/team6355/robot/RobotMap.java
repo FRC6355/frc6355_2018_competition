@@ -75,8 +75,12 @@ public class RobotMap {
 	public static Solenoid collector_release;
 	public static Solenoid solenoid;
 	
+	// Servo for camera
 	public static Servo cameraServo;
-	public static double camera_angle = 100.0 ;
+	public static double CAMERA_ANGLE_LEFT = 45.0 ;
+	public static double CAMERA_ANGLE_FORWARD = 111.0 ;
+	public static double CAMERA_ANGLE_RIGHT = 210.0 ;
+	public static double camera_angle = CAMERA_ANGLE_FORWARD ;
 	public static double CAMERA_ANGLE_INC = 2.0 ;
 
 

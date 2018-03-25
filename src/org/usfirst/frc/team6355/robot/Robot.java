@@ -124,9 +124,9 @@ public class Robot extends IterativeRobot {
 //        System.out.println("getDirectionDegrees:" + oi.buttonBox.getDirectionDegrees());
 
         
-        if (pov == 90)
+        if (pov == 90) // joystick right
         {
-            if (RobotMap.camera_angle + RobotMap.CAMERA_ANGLE_INC < 210.0 )
+            if (RobotMap.camera_angle + RobotMap.CAMERA_ANGLE_INC < RobotMap.CAMERA_ANGLE_RIGHT )
             {
         	RobotMap.camera_angle += RobotMap.CAMERA_ANGLE_INC;
         	RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
@@ -134,7 +134,7 @@ public class Robot extends IterativeRobot {
         }
         else if (pov == 270)
     	{
-            if (RobotMap.camera_angle - RobotMap.CAMERA_ANGLE_INC > 45.0 )
+            if (RobotMap.camera_angle - RobotMap.CAMERA_ANGLE_INC > RobotMap.CAMERA_ANGLE_LEFT )
             {
         	RobotMap.camera_angle -= RobotMap.CAMERA_ANGLE_INC;
         	RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
@@ -142,7 +142,7 @@ public class Robot extends IterativeRobot {
     	}
         else if (pov == 0)
     	{
-            RobotMap.camera_angle = 111.0 ;
+            RobotMap.camera_angle = RobotMap.CAMERA_ANGLE_LEFT ;
 	    RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
     	}
         
