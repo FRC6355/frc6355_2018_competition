@@ -5,7 +5,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Encoder;
+//import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
@@ -28,8 +28,7 @@ public class Robot extends IterativeRobot {
     Gyro gyro;
     
     Preferences prefs;
-
-
+    
     @Override
     public void robotInit() {
 	
@@ -41,14 +40,9 @@ public class Robot extends IterativeRobot {
 
 	RobotMap.init();
         
-//	pdp = new PowerDistributionPanel();
 	pdp = new PowerDistributionPanel(0);
-	SmartDashboard.putData(pdp);
-//	pdp.g
-//	PDP.reset(new PowerDistributionPanel(0));
-//	SmartDashboard::PutData(PDP.get());
-
 	pdp.resetTotalEnergy();
+	SmartDashboard.putData(pdp);
 	
 	// OI must be constructed after subsystems. If the OI creates Commands
 	// (which it very likely will), subsystems are not guaranteed to be
@@ -83,25 +77,20 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
 	double left_rotations = RobotMap.left_encoder.getDistance();
 	double right_rotations =  RobotMap.right_encoder.getDistance() ;
-//	System.out.println("left: " + left_encoder.getDistance());
-//	System.out.println("right: " + right_encoder.getDistance());
 	
 	double angle = ahrs.getAngle();
-	System.out.println("=====================angle: " + angle);
-	System.out.println("pdp temp: " + pdp.getTemperature());
-	System.out.println("pdp total current: " + pdp.getTotalCurrent());
-	System.out.println("pdp total energy: " + pdp.getTotalEnergy());
-	System.out.println("pdp total power: " + pdp.getTotalPower());
-	System.out.println("pdp voltage: " + pdp.getVoltage());
+//	System.out.println("=====================angle: " + angle);
+//	System.out.println("pdp temp: " + pdp.getTemperature());
+//	System.out.println("pdp total current: " + pdp.getTotalCurrent());
+//	System.out.println("pdp total energy: " + pdp.getTotalEnergy());
+//	System.out.println("pdp total power: " + pdp.getTotalPower());
+//	System.out.println("pdp voltage: " + pdp.getVoltage());
 //	System.out.println("gyro: " + gyro.getAngle());
-	
-//	pdp.getTemperature();
-	
+		
 	// Drive
         if (isOperatorControl() && isEnabled()) {
             RobotMap.differentialDrive.arcadeDrive(OI.joystick.getY(),-OI.joystick.getX());
         }        
-        
         
 	System.out.println("in teleop use compressor prefs: " + RobotMap.use_compressor);
 
@@ -115,41 +104,10 @@ public class Robot extends IterativeRobot {
         }
         
         OI.led_wall_selection();
-
-        System.out.println("POV:" + oi.joystick.getPOV());
         
-//        int pov = oi.buttonBox.getPOV();
-          int pov = oi.joystick.getPOV();
-        
-//        System.out.println("getDirectionDegrees:" + oi.buttonBox.getDirectionDegrees());
-
-        
-        if (pov == 90) // joystick right
-        {
-            if (RobotMap.camera_angle + RobotMap.CAMERA_ANGLE_INC < RobotMap.CAMERA_ANGLE_RIGHT )
-            {
-        	RobotMap.camera_angle += RobotMap.CAMERA_ANGLE_INC;
-        	RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
-            }
-        }
-        else if (pov == 270)
-    	{
-            if (RobotMap.camera_angle - RobotMap.CAMERA_ANGLE_INC > RobotMap.CAMERA_ANGLE_LEFT )
-            {
-        	RobotMap.camera_angle -= RobotMap.CAMERA_ANGLE_INC;
-        	RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
-            }
-    	}
-        else if (pov == 0)
-    	{
-            RobotMap.camera_angle = RobotMap.CAMERA_ANGLE_LEFT ;
-	    RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
-    	}
-        
-        System.out.println("camera ```````````````````" + RobotMap.camera_angle);
-                
+        OI.camera_pan();
+                        
 	Scheduler.getInstance().run();
-
     }
     
     
