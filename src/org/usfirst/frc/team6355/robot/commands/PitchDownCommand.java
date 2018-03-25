@@ -12,23 +12,19 @@ public class PitchDownCommand extends Command {
     public PitchDownCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-	System.out.println("PitchDownCommand");
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
 	RobotMap.pitch.set(-RobotMap.PITCH_SPEED);
-	System.out.println("PitchDownCommand init");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	System.out.println("PitchDownCommand execute");
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-	System.out.println("PitchDownCommand isFinished");
         return false;
    }
 

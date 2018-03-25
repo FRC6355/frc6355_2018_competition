@@ -8,10 +8,14 @@ package org.usfirst.frc.team6355.robot;
 //import edu.wpi.first.wpilibj.VictorSP;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -38,6 +42,8 @@ public class RobotMap {
 	private static final int RIGHT_1_VICTOR_CAN_ID = 3;
 	private static final int RIGHT_2_VICTOR_CAN_ID = 4;
 	private static final int RIGHT_3_VICTOR_CAN_ID = 6;
+	
+	private static final double DRIVE_MOTOR_OPEN_LOOP_RAMP = 1.0 ;
 
 	public static WPI_VictorSPX left1, left2, left3;
 	public static WPI_VictorSPX right1, right2, right3;
@@ -47,28 +53,43 @@ public class RobotMap {
 	public static SpeedControllerGroup rightDrive;
 
 	public static DifferentialDrive differentialDrive;
+	
+	public static Encoder left_encoder;
+	public static Encoder right_encoder;
+
 
 	// Non-drive motors
 	private static final int COLLECTOR_VICTOR_CAN_ID = 8;
 	private static final int PITCH_VICTOR_CAN_ID = 5;
 	private static final int LIFT_VICTOR_CAN_ID = 7;
 
-	public static double COLLECTOR_SPEED = 1.0;
+	public static double COLLECTOR_SPEED_BACKWARD = 0.5;
+	public static double COLLECTOR_SPEED_FORWARD = 1.0;
 	public static double PITCH_SPEED = 0.5;
-	public static double LIFT_SPEED = 0.75;
+	public static double LIFT_SPEED = 0.50;
 	
 	// Pneumatics
-	public static Boolean compressor = false ;
+	public static Boolean use_compressor = false ;
 	private static final int SHIFTER_SOLENOID_ID = 0 ;
 	private static final int COLLECTOR_RELEASE_SOLENOID_ID = 1 ;
 	public static Solenoid collector_release;
 	public static Solenoid solenoid;
+	
+	// Servo for camera
+	public static Servo cameraServo;
+	public static double CAMERA_ANGLE_LEFT = 45.0 ;
+	public static double CAMERA_ANGLE_FORWARD = 111.0 ;
+	public static double CAMERA_ANGLE_RIGHT = 210.0 ;
+	public static double camera_angle = CAMERA_ANGLE_FORWARD ;
+	public static double CAMERA_ANGLE_INC = 2.0 ;
+
 
 	public static void init() {
 		
 	        collector = new WPI_VictorSPX(COLLECTOR_VICTOR_CAN_ID);
 	        pitch = new WPI_VictorSPX(PITCH_VICTOR_CAN_ID);
 	        lift = new WPI_VictorSPX(LIFT_VICTOR_CAN_ID);
+	        lift.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 
 	        left1 = new WPI_VictorSPX(LEFT_1_VICTOR_CAN_ID);
 	        left1.setInverted(false);
@@ -82,18 +103,52 @@ public class RobotMap {
 	        right2.setInverted(true);
 	        right3 = new WPI_VictorSPX(RIGHT_3_VICTOR_CAN_ID);
 	        right3.setInverted(true);
-
+	        left1.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+	        left2.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+	        left3.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+	        right1.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+	        right2.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+	        right3.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+	        
 	        leftDrive = new SpeedControllerGroup(left1, left2, left3);
 	        rightDrive = new SpeedControllerGroup(right1, right2, right3);
 
 	        differentialDrive = new DifferentialDrive(leftDrive, rightDrive);
 	        
+		double diameter = 6.0 ; // inches
+		double revsPerPulse = 500.0 ;
+		double distancePerPulse = Math.PI * diameter / revsPerPulse ;
+//		left_encoder = new Encoder(7,8,false,Encoder.EncodingType.k4X);
+		left_encoder = new Encoder(7,8,false);
+		left_encoder.reset();
+		left_encoder.setDistancePerPulse(distancePerPulse);
+//		right_encoder = new Encoder(5,6,false,Encoder.EncodingType.k4X);
+		right_encoder = new Encoder(5,6,true);
+		right_encoder.reset();
+		right_encoder.setDistancePerPulse(distancePerPulse);
+
+	        
+	        SmartDashboard.putData(lift);
+	        SmartDashboard.putData("lift", lift);
 	        // Solenoids
-	        if (compressor)
+	        if (use_compressor)
 	        {
 	            solenoid = new Solenoid(SHIFTER_SOLENOID_ID);
 	            collector_release = new Solenoid(COLLECTOR_RELEASE_SOLENOID_ID);
 	        }
+	        
+	        cameraServo = new Servo(0);
+	        
+	        SmartDashboard.putData(cameraServo);
+
+	        // Get the current value so that it doesn't move right away when
+	        //   camera moving commands start
+//	        cameraServo.setAngle(100.0);
+	        RobotMap.camera_angle = cameraServo.getAngle();
+	        cameraServo.setAngle(RobotMap.camera_angle);
+	        
+	        LiveWindow.addActuator("DriveTrain", "right1", (WPI_VictorSPX) right1);
+	        LiveWindow.addSensor("DriveTrain", "leftDriveTrainEncoder", left_encoder);
 
 	}
 }
