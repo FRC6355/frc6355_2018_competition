@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Preferences;
 
 @SuppressWarnings("deprecation")
 public class Robot extends IterativeRobot {
@@ -20,20 +22,32 @@ public class Robot extends IterativeRobot {
     
     @SuppressWarnings("unused")
     private PowerDistributionPanel pdp;
-
-    private Encoder left_encoder;
-
-    private Encoder right_encoder;
     
     AHRS ahrs;
     
     Gyro gyro;
+    
+    Preferences prefs;
+
 
     @Override
     public void robotInit() {
+	
+	// Preferences
+	prefs = Preferences.getInstance();
+
+	RobotMap.use_compressor = prefs.getBoolean("use_compressor", false);
+	System.out.println("use compressor prefs: " + RobotMap.use_compressor);
+
 	RobotMap.init();
         
-	pdp = new PowerDistributionPanel();
+//	pdp = new PowerDistributionPanel();
+	pdp = new PowerDistributionPanel(0);
+	SmartDashboard.putData(pdp);
+//	pdp.g
+//	PDP.reset(new PowerDistributionPanel(0));
+//	SmartDashboard::PutData(PDP.get());
+
 	pdp.resetTotalEnergy();
 	
 	// OI must be constructed after subsystems. If the OI creates Commands
@@ -51,17 +65,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	NetworkTable.setServerMode();
-	double diameter = 6.0 ; // inches
-	double revsPerPulse = 500.0 ;
-	double distancePerPulse = Math.PI * diameter / revsPerPulse ;
-//	left_encoder = new Encoder(7,8,false,Encoder.EncodingType.k4X);
-	left_encoder = new Encoder(7,8,false);
-	left_encoder.reset();
-	left_encoder.setDistancePerPulse(distancePerPulse);
-//	right_encoder = new Encoder(5,6,false,Encoder.EncodingType.k4X);
-	right_encoder = new Encoder(5,6,true);
-	right_encoder.reset();
-	right_encoder.setDistancePerPulse(distancePerPulse);
 	
 	try {
 	    ahrs = new AHRS(SPI.Port.kMXP);
@@ -69,6 +72,8 @@ public class Robot extends IterativeRobot {
 	    DriverStation.reportError("Error instantiating navX" + ex.getMessage(), true);
 	}
 	ahrs.reset();
+	
+
     }
 
     @Override
@@ -76,8 +81,8 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void teleopPeriodic() {
-	double left_rotations = left_encoder.getDistance();
-	double right_rotations = right_encoder.getDistance() ;
+	double left_rotations = RobotMap.left_encoder.getDistance();
+	double right_rotations =  RobotMap.right_encoder.getDistance() ;
 //	System.out.println("left: " + left_encoder.getDistance());
 //	System.out.println("right: " + right_encoder.getDistance());
 	
@@ -91,15 +96,16 @@ public class Robot extends IterativeRobot {
 //	System.out.println("gyro: " + gyro.getAngle());
 	
 //	pdp.getTemperature();
-
-	
 	
 	// Drive
         if (isOperatorControl() && isEnabled()) {
             RobotMap.differentialDrive.arcadeDrive(OI.joystick.getY(),-OI.joystick.getX());
         }        
         
-        if (RobotMap.compressor)
+        
+	System.out.println("in teleop use compressor prefs: " + RobotMap.use_compressor);
+
+        if (RobotMap.use_compressor)
         {
             // Shift
             RobotMap.solenoid.set(OI.joystick.getRawButton(OI.SHIFT_BUTTON));
@@ -113,5 +119,48 @@ public class Robot extends IterativeRobot {
 	Scheduler.getInstance().run();
 
     }
+    
+    
+	public void autonomousInit() {
+	    
+	    String gameData;
+	    gameData = DriverStation.getInstance().getGameSpecificMessage();
+	    if(gameData.length() > 0)
+	    {
+		  if(gameData.charAt(0) == 'L')
+		  {
+			//Put left auto code here
+		  } else {
+			//Put right auto code here
+		  }
+	    }
+	    
+	    System.out.println("game data: " + gameData);
 
+	    
+//		driveTrain.resetDistanceMeasures(); // Reset encoders to 0.
+//		
+//		// schedule the autonomous command (example)
+//		// RobotMap.ahrs.reset();
+//
+//		if (autonomousCommand != null)
+//			autonomousCommand.cancel();
+//		
+//		// Get the command that's selected in the chooser.
+//		autonomousCommand = autonomousChooser.getSelected();
+//		if (autonomousCommand != null)
+//			autonomousCommand.start();
+	}
+
+	/**
+	 * This function is called periodically during autonomous
+	 */
+	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
+	}
+
+
+    
+    
+    
 }

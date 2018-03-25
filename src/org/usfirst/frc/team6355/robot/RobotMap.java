@@ -8,10 +8,14 @@ package org.usfirst.frc.team6355.robot;
 //import edu.wpi.first.wpilibj.VictorSP;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -49,6 +53,10 @@ public class RobotMap {
 	public static SpeedControllerGroup rightDrive;
 
 	public static DifferentialDrive differentialDrive;
+	
+	public static Encoder left_encoder;
+	public static Encoder right_encoder;
+
 
 	// Non-drive motors
 	private static final int COLLECTOR_VICTOR_CAN_ID = 8;
@@ -58,14 +66,19 @@ public class RobotMap {
 	public static double COLLECTOR_SPEED_BACKWARD = 0.5;
 	public static double COLLECTOR_SPEED_FORWARD = 1.0;
 	public static double PITCH_SPEED = 0.5;
-	public static double LIFT_SPEED = 0.75;
+	public static double LIFT_SPEED = 0.50;
 	
 	// Pneumatics
-	public static Boolean compressor = true ;
+	public static Boolean use_compressor = false ;
 	private static final int SHIFTER_SOLENOID_ID = 0 ;
 	private static final int COLLECTOR_RELEASE_SOLENOID_ID = 1 ;
 	public static Solenoid collector_release;
 	public static Solenoid solenoid;
+	
+	public static Servo cameraServo;
+	public static double camera_angle = 0.0 ;
+	public static double CAMERA_ANGLE_INC = 1.0 ;
+
 
 	public static void init() {
 		
@@ -98,12 +111,38 @@ public class RobotMap {
 
 	        differentialDrive = new DifferentialDrive(leftDrive, rightDrive);
 	        
+		double diameter = 6.0 ; // inches
+		double revsPerPulse = 500.0 ;
+		double distancePerPulse = Math.PI * diameter / revsPerPulse ;
+//		left_encoder = new Encoder(7,8,false,Encoder.EncodingType.k4X);
+		left_encoder = new Encoder(7,8,false);
+		left_encoder.reset();
+		left_encoder.setDistancePerPulse(distancePerPulse);
+//		right_encoder = new Encoder(5,6,false,Encoder.EncodingType.k4X);
+		right_encoder = new Encoder(5,6,true);
+		right_encoder.reset();
+		right_encoder.setDistancePerPulse(distancePerPulse);
+
+	        
+	        SmartDashboard.putData(lift);
+	        SmartDashboard.putData("lift", lift);
 	        // Solenoids
-	        if (compressor)
+	        if (use_compressor)
 	        {
 	            solenoid = new Solenoid(SHIFTER_SOLENOID_ID);
 	            collector_release = new Solenoid(COLLECTOR_RELEASE_SOLENOID_ID);
 	        }
+	        
+	        cameraServo = new Servo(0);
+	        
+	        SmartDashboard.putData(cameraServo);
+
+	        // Get the current value so that it doesn't move right away when
+	        //   camera moving commands start
+	        RobotMap.camera_angle = cameraServo.getAngle();
+	        
+	        LiveWindow.addActuator("DriveTrain", "right1", (WPI_VictorSPX) right1);
+	        LiveWindow.addSensor("DriveTrain", "leftDriveTrainEncoder", left_encoder);
 
 	}
 }

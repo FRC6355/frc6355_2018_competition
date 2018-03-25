@@ -73,6 +73,12 @@ public class OI {
     private JoystickButton liftUpButton, liftDownButton;
     private JoystickButton collectorForwardButton, collectorBackwardButton;
     
+    // Camera motor
+    private JoystickButton cameraLeftButton, cameraRightButton;
+    private static final int CAMERA_LEFT_BUTTON = 9;
+    private static final int CAMERA_RIGHT_BUTTON = 10;
+
+    
     // Button box
     private static final int BUTTON_BOX_PURPLE = 1;
     private static final int BUTTON_BOX_RED = 2;
@@ -114,6 +120,12 @@ public class OI {
         liftUpButton.whileHeld(new LiftUpCommand());
         liftDownButton.whileHeld(new LiftDownCommand());
 
+        // Camera
+        cameraLeftButton = new JoystickButton(joystick, CAMERA_LEFT_BUTTON);
+        cameraRightButton = new JoystickButton(joystick, CAMERA_RIGHT_BUTTON);
+        cameraLeftButton.whileHeld(new CameraLeftCommand());
+        cameraRightButton.whileHeld(new CameraRightCommand());
+        
         // SmartDashboard Buttons
         // SmartDashboard.putData("Reset Drive Encoders Command", new ResetDrivetrainEncodersCommand());
 		
