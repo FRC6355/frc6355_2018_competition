@@ -135,19 +135,19 @@ public class OI {
 	else if (buttonBox.getRawAxis(BUTTON_BOX_L2LT) > 0.0)
 	    led_matrix.putString("image","FULLIMAGESCROLL.PPM");
 	else if (buttonBox.getRawButton(BUTTON_BOX_PURPLE))
-	    led_matrix.putString("image","HIJONDARR.PPM");
-	else if (buttonBox.getRawButton(BUTTON_BOX_RED))
-	    led_matrix.putString("image","BAM.PPM");
+	    led_matrix.putString("image","MILITARYNAMES.PPM");
 	else if (buttonBox.getRawButton(BUTTON_BOX_PINK))
-	    led_matrix.putString("image","BLUEGHOST.PPM");
+	    led_matrix.putString("image","CATARPILLAR.PPM");
 	else if (buttonBox.getRawButton(BUTTON_BOX_TEAL))
-	    led_matrix.putString("image","BUCKEYEREGIONAL.PPM");
+	    led_matrix.putString("image","8BITSCROLL.PPM");
+	else if (buttonBox.getRawButton(BUTTON_BOX_RED))
+	    led_matrix.putString("image","MEGAMANvsPACMAN.PPM");
 	else if (buttonBox.getRawButton(BUTTON_BOX_R1RB))
-	    led_matrix.putString("image","1STDIGITALTWIN.PPM");
+	    led_matrix.putString("image","6355SCROLL.PPM");
 	else if (buttonBox.getRawAxis(BUTTON_BOX_R2RT) > 0.0)
-	    led_matrix.putString("image","FIRSTFUELCELLS.PPM");
-	else if (buttonBox.getRawAxis(BUTTON_BOX_OPTIONS) > 0.0)
-	    led_matrix.putString("image","GOGOGADGET.PPM");
+	    led_matrix.putString("image","SPACEINVADERSCROLL.PPM");
+//	else if (buttonBox.getRawAxis(BUTTON_BOX_OPTIONS) > 0.0)
+//	    led_matrix.putString("image","GOGOGADGET.PPM");
 	else if (buttonBox.getRawButton(BUTTON_BOX_R3SR))
 	    led_matrix.putString("image","off");
 //	else 

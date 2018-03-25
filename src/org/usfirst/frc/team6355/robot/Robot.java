@@ -88,7 +88,7 @@ public class Robot extends IterativeRobot {
 	System.out.println("pdp total energy: " + pdp.getTotalEnergy());
 	System.out.println("pdp total power: " + pdp.getTotalPower());
 	System.out.println("pdp voltage: " + pdp.getVoltage());
-	System.out.println("gyro: " + gyro.getAngle());
+//	System.out.println("gyro: " + gyro.getAngle());
 	
 //	pdp.getTemperature();
 
