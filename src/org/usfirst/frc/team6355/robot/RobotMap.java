@@ -8,9 +8,12 @@ package org.usfirst.frc.team6355.robot;
 //import edu.wpi.first.wpilibj.VictorSP;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -64,6 +67,17 @@ public class RobotMap {
 	public static Solenoid collector_release;
 	public static Solenoid solenoid;
 
+	
+	// Servo for camera
+	public static Servo cameraServo;
+	public static double CAMERA_ANGLE_LEFT = 45.0 ;
+	public static double CAMERA_ANGLE_FORWARD = 111.0 ;
+	public static double CAMERA_ANGLE_RIGHT = 210.0 ;
+	public static double camera_angle = CAMERA_ANGLE_FORWARD ;
+	public static double CAMERA_ANGLE_INC = 2.0 ;
+
+
+	@SuppressWarnings("deprecation")
 	public static void init() {
 		
 	        collector = new WPI_VictorSPX(COLLECTOR_VICTOR_CAN_ID);
@@ -94,6 +108,20 @@ public class RobotMap {
 	            solenoid = new Solenoid(SHIFTER_SOLENOID_ID);
 	            collector_release = new Solenoid(COLLECTOR_RELEASE_SOLENOID_ID);
 	        }
+	        
+	        cameraServo = new Servo(0);
+	        
+	        SmartDashboard.putData(cameraServo);
+
+	        // Get the current value so that it doesn't move right away when
+	        //   camera moving commands start
+//	        cameraServo.setAngle(100.0);
+	        RobotMap.camera_angle = cameraServo.getAngle();
+	        cameraServo.setAngle(RobotMap.camera_angle);
+	        
+	        LiveWindow.addActuator("DriveTrain", "right1", (WPI_VictorSPX) right1);
+//	        LiveWindow.addSensor("DriveTrain", "leftDriveTrainEncoder", left_encoder);
+
 
 	}
 }

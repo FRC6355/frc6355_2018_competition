@@ -26,6 +26,8 @@ public class Robot extends IterativeRobot {
     private Encoder right_encoder;
 
     private DigitalInput limit_switch;
+    private int limit_switch_count = 0 ;
+    private Boolean limit_switch_val ;
     
     AHRS ahrs;
 
@@ -102,10 +104,17 @@ public class Robot extends IterativeRobot {
         }
         
         OI.led_wall_selection();
+        OI.camera_pan();
                 
 	Scheduler.getInstance().run();
+		
+	limit_switch_val = limit_switch.get();
 	
-	System.out.println("limit switch" + limit_switch.get());
+	if (limit_switch_val) {
+	    limit_switch_count += 1 ;
+	}
+	System.out.println("limit switch: " + limit_switch_val);
+	System.out.println("limit switch count: " + limit_switch_count);
 
     }
 
