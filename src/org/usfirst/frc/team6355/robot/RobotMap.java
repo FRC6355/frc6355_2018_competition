@@ -55,7 +55,7 @@ public class RobotMap {
 
 	public static double COLLECTOR_SPEED = 1.0;
 	public static double PITCH_SPEED = 0.5;
-	public static double LIFT_SPEED = 0.75;
+	public static double LIFT_SPEED = 0.4;
 	
 	// Pneumatics
 	public static Boolean compressor = false ;

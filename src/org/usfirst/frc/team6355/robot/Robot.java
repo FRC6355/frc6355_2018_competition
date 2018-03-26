@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 @SuppressWarnings("deprecation")
 public class Robot extends IterativeRobot {
@@ -23,6 +24,8 @@ public class Robot extends IterativeRobot {
     private Encoder left_encoder;
 
     private Encoder right_encoder;
+
+    private DigitalInput limit_switch;
     
     AHRS ahrs;
 
@@ -65,6 +68,8 @@ public class Robot extends IterativeRobot {
 	    DriverStation.reportError("Error instantiating navX" + ex.getMessage(), true);
 	}
 	ahrs.reset();
+	
+	limit_switch = new DigitalInput(4);
     }
 
     @Override
@@ -99,7 +104,17 @@ public class Robot extends IterativeRobot {
         OI.led_wall_selection();
                 
 	Scheduler.getInstance().run();
+	
+	System.out.println("limit switch" + limit_switch.get());
 
     }
 
+    @Override
+    public void robotPeriodic() {
+    }
+    
+    @Override
+    public void disabledPeriodic() {
+    }
+    
 }
