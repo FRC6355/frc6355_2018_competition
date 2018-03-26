@@ -4,6 +4,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -28,6 +29,7 @@ public class Robot extends IterativeRobot {
     private DigitalInput limit_switch;
     private int limit_switch_count = 0 ;
     private Boolean limit_switch_val ;
+    private Counter normalCounter ;
     
     AHRS ahrs;
 
@@ -72,6 +74,10 @@ public class Robot extends IterativeRobot {
 	ahrs.reset();
 	
 	limit_switch = new DigitalInput(4);
+	
+	normalCounter = new Counter();
+	normalCounter.setUpSource(4);
+	normalCounter.setUpDownCounterMode();
     }
 
     @Override
@@ -115,6 +121,7 @@ public class Robot extends IterativeRobot {
 	}
 	System.out.println("limit switch: " + limit_switch_val);
 	System.out.println("limit switch count: " + limit_switch_count);
+	System.out.println("limit switch counter: " + normalCounter.get());
 
     }
 
