@@ -19,7 +19,6 @@ public class CollectorForwardCommand extends Command {
 	RobotMap.collector.set(-RobotMap.COLLECTOR_SPEED_FORWARD);
     }
 
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     }
 

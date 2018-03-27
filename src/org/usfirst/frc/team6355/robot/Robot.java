@@ -1,5 +1,7 @@
 package org.usfirst.frc.team6355.robot;
 
+import org.usfirst.frc.team6355.robot.commands.PitchUpWithLimitCommand;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.cscore.UsbCamera;
@@ -9,6 +11,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -34,14 +37,13 @@ public class Robot extends IterativeRobot {
 	
 	// Preferences
 	prefs = Preferences.getInstance();
-
 	RobotMap.use_compressor = prefs.getBoolean("use_compressor", false);
 	System.out.println("use compressor prefs: " + RobotMap.use_compressor);
 
 	RobotMap.init();
         
-	pdp = new PowerDistributionPanel(0);
-	pdp.resetTotalEnergy();
+	pdp = new PowerDistributionPanel(0); // need this so we get data in network tables for digital twin
+//	pdp.resetTotalEnergy();
 	SmartDashboard.putData(pdp);
 	
 	// OI must be constructed after subsystems. If the OI creates Commands
@@ -79,7 +81,7 @@ public class Robot extends IterativeRobot {
 	double right_rotations =  RobotMap.right_encoder.getDistance() ;
 	
 	double angle = ahrs.getAngle();
-//	System.out.println("=====================angle: " + angle);
+	System.out.println("===================== angle: " + angle);
 //	System.out.println("pdp temp: " + pdp.getTemperature());
 //	System.out.println("pdp total current: " + pdp.getTotalCurrent());
 //	System.out.println("pdp total energy: " + pdp.getTotalEnergy());
@@ -92,7 +94,7 @@ public class Robot extends IterativeRobot {
             RobotMap.differentialDrive.arcadeDrive(OI.joystick.getY(),-OI.joystick.getX());
         }        
         
-	System.out.println("in teleop use compressor prefs: " + RobotMap.use_compressor);
+//	System.out.println("in teleop use compressor prefs: " + RobotMap.use_compressor);
 
         if (RobotMap.use_compressor)
         {
@@ -127,6 +129,9 @@ public class Robot extends IterativeRobot {
 	    }
 	    
 	    System.out.println("game data: " + gameData);
+	    
+//	     Command autonomousCommandPitchUpWithLimit = new PitchUpWithLimitCommand();
+//	     autonomousCommandPitchUpWithLimit.start();
 
 	    
 //		driveTrain.resetDistanceMeasures(); // Reset encoders to 0.

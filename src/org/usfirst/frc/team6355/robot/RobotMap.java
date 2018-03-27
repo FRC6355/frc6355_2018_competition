@@ -1,5 +1,7 @@
 package org.usfirst.frc.team6355.robot;
 
+import org.usfirst.frc.team6355.robot.subsystems.Pitch;
+
 //import com.ctre.phoenix.motorcontrol.ControlMode;
 //import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -16,6 +18,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import org.usfirst.frc.team6355.robot.subsystems.*;
+
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -56,6 +60,8 @@ public class RobotMap {
 	
 	public static Encoder left_encoder;
 	public static Encoder right_encoder;
+	
+	public static Pitch pitch_subsystem;
 
 
 	// Non-drive motors
@@ -90,6 +96,8 @@ public class RobotMap {
 	        pitch = new WPI_VictorSPX(PITCH_VICTOR_CAN_ID);
 	        lift = new WPI_VictorSPX(LIFT_VICTOR_CAN_ID);
 	        lift.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+	        
+	        pitch_subsystem = new Pitch();
 
 	        left1 = new WPI_VictorSPX(LEFT_1_VICTOR_CAN_ID);
 	        left1.setInverted(false);
