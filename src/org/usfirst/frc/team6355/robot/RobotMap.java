@@ -1,7 +1,5 @@
 package org.usfirst.frc.team6355.robot;
 
-import org.usfirst.frc.team6355.robot.subsystems.Pitch;
-
 //import com.ctre.phoenix.motorcontrol.ControlMode;
 //import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -75,7 +73,7 @@ public class RobotMap {
 	public static double LIFT_SPEED = 0.50;
 	
 	// Pneumatics
-	public static Boolean use_compressor = false ;
+	public static Boolean use_compressor = true ;
 	private static final int SHIFTER_SOLENOID_ID = 0 ;
 	private static final int COLLECTOR_RELEASE_SOLENOID_ID = 1 ;
 	public static Solenoid collector_release;
@@ -88,6 +86,7 @@ public class RobotMap {
 	public static double CAMERA_ANGLE_RIGHT = 210.0 ;
 	public static double camera_angle = CAMERA_ANGLE_FORWARD ;
 	public static double CAMERA_ANGLE_INC = 2.0 ;
+	public static DriveTrain driveTrain;
 
 
 	public static void init() {
@@ -123,6 +122,9 @@ public class RobotMap {
 
 	        differentialDrive = new DifferentialDrive(leftDrive, rightDrive);
 	        
+		driveTrain = new DriveTrain();
+
+	        
 		double diameter = 6.0 ; // inches
 		double revsPerPulse = 500.0 ;
 		double distancePerPulse = Math.PI * diameter / revsPerPulse ;
@@ -141,6 +143,7 @@ public class RobotMap {
 	        // Solenoids
 	        if (use_compressor)
 	        {
+	            System.out.println("compressor");
 	            solenoid = new Solenoid(SHIFTER_SOLENOID_ID);
 	            collector_release = new Solenoid(COLLECTOR_RELEASE_SOLENOID_ID);
 	        }

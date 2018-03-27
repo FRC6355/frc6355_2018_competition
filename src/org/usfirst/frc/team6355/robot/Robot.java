@@ -37,7 +37,7 @@ public class Robot extends IterativeRobot {
 	
 	// Preferences
 	prefs = Preferences.getInstance();
-	RobotMap.use_compressor = prefs.getBoolean("use_compressor", false);
+//	RobotMap.use_compressor = prefs.getBoolean("use_compressor", false);
 	System.out.println("use compressor prefs: " + RobotMap.use_compressor);
 
 	RobotMap.init();
