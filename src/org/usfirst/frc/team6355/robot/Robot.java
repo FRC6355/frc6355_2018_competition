@@ -32,6 +32,9 @@ public class Robot extends IterativeRobot {
     
     Preferences prefs;
     
+    public static NetworkTable navx_table ;
+
+    
     @Override
     public void robotInit() {
 	
@@ -61,6 +64,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	NetworkTable.setServerMode();
+	navx_table = NetworkTable.getTable("navx");
+
 	
 	try {
 	    ahrs = new AHRS(SPI.Port.kMXP);
@@ -108,6 +113,8 @@ public class Robot extends IterativeRobot {
         OI.led_wall_selection();
         
         OI.camera_pan();
+        
+        navxToNetworkTables();
                         
 	Scheduler.getInstance().run();
     }
@@ -179,6 +186,21 @@ public class Robot extends IterativeRobot {
 	public void robotPeriodic() 
 	{
 //	     System.out.println("Robot.robotPeriodic()");
+	}
+
+	public void navxToNetworkTables() 
+	{
+//	    SmartDashboard.putData(ahrs.getAltitude());
+	    double altitude = ahrs.getAltitude() ;
+	    double navx_pitch = ahrs.getPitch() ;
+	    double navx_roll = ahrs.getRoll() ;
+	    double navx_yaw = ahrs.getYaw() ;
+	    navx_table.putDouble("altitude", altitude );
+	    navx_table.putDouble("navx_pitch", navx_pitch );
+	    navx_table.putDouble("navx_roll", navx_roll );
+	    navx_table.putDouble("navx_yaw", navx_yaw );
+	    System.out.println("getAltitude: " + altitude );
+	    
 	}
 
     

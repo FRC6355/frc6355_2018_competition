@@ -20,8 +20,6 @@ import org.usfirst.frc.team6355.robot.RobotMap;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 
-
-
 /**
  * 
  */
@@ -29,14 +27,28 @@ public class TryingAutonomousCommandGroup extends CommandGroup {
     
     private static final double AUTONOMOUS_DRIVE_FORWARD_INCHES = 12.0;
     private static final double AUTONOMOUS_DRIVE_SPEED = 0.4;
-    private static final double AUTONOMOUS_PITCH_SECONDS = 0.5;
+    private static final double AUTONOMOUS_PITCH_UP_SECONDS = 0.5;
+    private static final double AUTONOMOUS_PITCH_DOWN_SECONDS = 0.5;
+    private static final double AUTONOMOUS_COLLECTOR_FORWARD_SECONDS = 0.5;
+    private static final double AUTONOMOUS_COLLECTOR_BACKWARD_SECONDS = 0.2;
+    private static final double AUTONOMOUS_LIFT_UP_SECONDS = 0.5;
+    private static final double AUTONOMOUS_LIFT_DOWN_SECONDS = 0.5;
 
 
     public TryingAutonomousCommandGroup() {
     	System.out.println("Autonomous TryingAutonomousCommandGroup command created.");
     	
-    	this.addSequential(new DriveForwardInchesCommand(AUTONOMOUS_DRIVE_FORWARD_INCHES, AUTONOMOUS_DRIVE_SPEED));
-    	this.addSequential(new PitchUpSecondsCommand(AUTONOMOUS_PITCH_SECONDS));
+    	this.addSequential(new DriveForwardInchesCommand(AUTONOMOUS_DRIVE_FORWARD_INCHES, AUTONOMOUS_DRIVE_SPEED));    	
+    	this.addSequential(new PitchUpSecondsCommand(AUTONOMOUS_PITCH_UP_SECONDS));
+    	
+//    	this.addSequential(new DriveForwardSecondsCommand(AUTONOMOUS_DRIVE_FORWARD_SECONDS, AUTONOMOUS_DRIVE_SPEED));
+//    	this.addSequential(new PitchDownSecondsCommand(AUTONOMOUS_PITCH_DOWN_SECONDS));
+//    	this.addSequential(new CollectorForwardSecondsCommand(AUTONOMOUS_COLLECTOR_FORWARD_SECONDS));
+//    	this.addSequential(new CollectorBackwardSecondsCommand(AUTONOMOUS_COLLECTOR_BACKWARD_SECONDS));
+//    	this.addSequential(new LiftUpSecondsCommand(AUTONOMOUS_LIFT_UP_SECONDS));
+//    	this.addSequential(new LiftDownSecondsCommand(AUTONOMOUS_LIFT_UP_SECONDS));
+    	
+    	
     }
 
 }
