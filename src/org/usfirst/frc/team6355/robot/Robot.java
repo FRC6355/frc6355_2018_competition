@@ -1,6 +1,6 @@
 package org.usfirst.frc.team6355.robot;
 
-import org.usfirst.frc.team6355.robot.commands.PitchUpWithLimitCommand;
+import org.usfirst.frc.team6355.robot.commands.*;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -129,6 +129,10 @@ public class Robot extends IterativeRobot {
 	    }
 	    
 	    System.out.println("game data: " + gameData);
+	    
+	    Command tryingAutonomousCommandGroup = new TryingAutonomousCommandGroup() ;
+	    
+	    tryingAutonomousCommandGroup.start();
 	    
 //	     Command autonomousCommandPitchUpWithLimit = new PitchUpWithLimitCommand();
 //	     autonomousCommandPitchUpWithLimit.start();
