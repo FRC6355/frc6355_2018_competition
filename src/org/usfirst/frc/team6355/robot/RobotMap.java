@@ -70,8 +70,8 @@ public class RobotMap {
 	public static double COLLECTOR_SPEED_BACKWARD = 0.5;
 	public static double COLLECTOR_SPEED_FORWARD = 1.0;
 	public static double PITCH_SPEED = 0.5;
-	public static double LIFT_SPEED_UP = 0.70;
-	public static double LIFT_SPEED_DOWN = 0.30;
+	public static double LIFT_SPEED_UP = 0.30;
+	public static double LIFT_SPEED_DOWN = 0.80;
 	
 	// Pneumatics
 	public static Boolean use_compressor = true ;
