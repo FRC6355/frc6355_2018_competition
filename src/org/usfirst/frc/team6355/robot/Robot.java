@@ -25,11 +25,7 @@ public class Robot extends IterativeRobot {
     
     @SuppressWarnings("unused")
     private PowerDistributionPanel pdp;
-    
-    AHRS ahrs;
-    
-    Gyro gyro;
-    
+       
     Preferences prefs;
     
     public static NetworkTable navx_table ;
@@ -68,11 +64,11 @@ public class Robot extends IterativeRobot {
 
 	
 	try {
-	    ahrs = new AHRS(SPI.Port.kMXP);
+	    RobotMap.ahrs = new AHRS(SPI.Port.kMXP);
 	} catch (RuntimeException ex) {
 	    DriverStation.reportError("Error instantiating navX" + ex.getMessage(), true);
 	}
-	ahrs.reset();
+	RobotMap.ahrs.reset();
 	
 
     }
@@ -85,7 +81,7 @@ public class Robot extends IterativeRobot {
 	double left_rotations = RobotMap.left_encoder.getDistance();
 	double right_rotations =  RobotMap.right_encoder.getDistance() ;
 	
-	double angle = ahrs.getAngle();
+	double angle = RobotMap.ahrs.getAngle();
 	System.out.println("===================== angle: " + angle);
 //	System.out.println("pdp temp: " + pdp.getTemperature());
 //	System.out.println("pdp total current: " + pdp.getTotalCurrent());
@@ -191,10 +187,10 @@ public class Robot extends IterativeRobot {
 	public void navxToNetworkTables() 
 	{
 //	    SmartDashboard.putData(ahrs.getAltitude());
-	    double altitude = ahrs.getAltitude() ;
-	    double navx_pitch = ahrs.getPitch() ;
-	    double navx_roll = ahrs.getRoll() ;
-	    double navx_yaw = ahrs.getYaw() ;
+	    double altitude = RobotMap.ahrs.getAltitude() ;
+	    double navx_pitch = RobotMap.ahrs.getPitch() ;
+	    double navx_roll = RobotMap.ahrs.getRoll() ;
+	    double navx_yaw = RobotMap.ahrs.getYaw() ;
 	    navx_table.putDouble("altitude", altitude );
 	    navx_table.putDouble("navx_pitch", navx_pitch );
 	    navx_table.putDouble("navx_roll", navx_roll );

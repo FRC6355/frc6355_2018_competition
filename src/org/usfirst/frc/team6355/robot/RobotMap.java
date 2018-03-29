@@ -7,11 +7,13 @@ package org.usfirst.frc.team6355.robot;
 
 //import edu.wpi.first.wpilibj.VictorSP;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -60,6 +62,9 @@ public class RobotMap {
 	public static Encoder right_encoder;
 	
 	public static Pitch pitch_subsystem;
+	
+	public static DriveTrain driveTrain;
+	public static DriveTrain driveTrainPID;
 
 
 	// Non-drive motors
@@ -87,8 +92,10 @@ public class RobotMap {
 	public static double CAMERA_ANGLE_RIGHT = 210.0 ;
 	public static double camera_angle = CAMERA_ANGLE_FORWARD ;
 	public static double CAMERA_ANGLE_INC = 2.0 ;
-	public static DriveTrain driveTrain;
 
+	// Navigation
+	public static AHRS ahrs;
+	public static Gyro gyro;
 
 	public static void init() {
 		
