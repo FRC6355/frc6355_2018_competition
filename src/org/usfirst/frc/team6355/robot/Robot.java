@@ -119,21 +119,9 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
 	    
-	    String gameData;
-	    gameData = DriverStation.getInstance().getGameSpecificMessage();
-	    if(gameData.length() > 0)
-	    {
-		  if(gameData.charAt(0) == 'L')
-		  {
-			//Put left auto code here
-		  } else {
-			//Put right auto code here
-		  }
-	    }
+	
 	    
-	    System.out.println("game data: " + gameData);
-	    
-	    Command tryingAutonomousCommandGroup = new TryingAutonomousCommandGroup() ;
+	    Command tryingAutonomousCommandGroup = new StraightLeftCommandGroup() ;
 	    
 	    tryingAutonomousCommandGroup.start();
 	    

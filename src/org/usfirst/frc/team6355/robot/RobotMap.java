@@ -107,17 +107,13 @@ public class RobotMap {
 	        pitch_subsystem = new Pitch();
 
 	        left1 = new WPI_VictorSPX(LEFT_1_VICTOR_CAN_ID);
-	        left1.setInverted(false);
+	        left1.setInverted(true);
 	        left2 = new WPI_VictorSPX(LEFT_2_VICTOR_CAN_ID);
-	        left2.setInverted(true);
 	        left3 = new WPI_VictorSPX(LEFT_3_VICTOR_CAN_ID);
-	        left3.setInverted(true);
 	        right1 = new WPI_VictorSPX(RIGHT_1_VICTOR_CAN_ID);
 	        right1.setInverted(false);
 	        right2 = new WPI_VictorSPX(RIGHT_2_VICTOR_CAN_ID);
-	        right2.setInverted(true);
 	        right3 = new WPI_VictorSPX(RIGHT_3_VICTOR_CAN_ID);
-	        right3.setInverted(true);
 	        left1.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
 	        left2.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
 	        left3.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
