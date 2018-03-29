@@ -2,21 +2,28 @@ package org.usfirst.frc.team6355.robot.commands;
 
 import org.usfirst.frc.team6355.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class CollectorForwardCommand extends Command {
+public class CollectorBackwardSecondsCommand extends Command {
 
-    public CollectorForwardCommand() {
+    private double startTime = 0.0;
+    private double collectorSeconds = 0.0;
+
+
+    public CollectorBackwardSecondsCommand(double seconds) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+	collectorSeconds = seconds ;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	RobotMap.collector.set(-RobotMap.COLLECTOR_SPEED_FORWARD);
+	startTime = Timer.getFPGATimestamp();	// seconds.
+	RobotMap.collector.set(RobotMap.COLLECTOR_SPEED_FORWARD);
     }
 
     protected void execute() {
@@ -24,7 +31,11 @@ public class CollectorForwardCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	double currentTime = Timer.getFPGATimestamp();
+    	if (startTime + collectorSeconds < currentTime){
+		return true;
+	}    		
+    return false;
    }
 
     // Called once after isFinished returns true

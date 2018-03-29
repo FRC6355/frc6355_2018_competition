@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import org.usfirst.frc.team6355.robot.subsystems.*;
+
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -56,6 +58,8 @@ public class RobotMap {
 	
 	public static Encoder left_encoder;
 	public static Encoder right_encoder;
+	
+	public static Pitch pitch_subsystem;
 
 
 	// Non-drive motors
@@ -66,10 +70,11 @@ public class RobotMap {
 	public static double COLLECTOR_SPEED_BACKWARD = 0.5;
 	public static double COLLECTOR_SPEED_FORWARD = 1.0;
 	public static double PITCH_SPEED = 0.5;
-	public static double LIFT_SPEED = 0.50;
+	public static double LIFT_SPEED_UP = 0.30;
+	public static double LIFT_SPEED_DOWN = 0.80;
 	
 	// Pneumatics
-	public static Boolean use_compressor = false ;
+	public static Boolean use_compressor = true ;
 	private static final int SHIFTER_SOLENOID_ID = 0 ;
 	private static final int COLLECTOR_RELEASE_SOLENOID_ID = 1 ;
 	public static Solenoid collector_release;
@@ -82,6 +87,7 @@ public class RobotMap {
 	public static double CAMERA_ANGLE_RIGHT = 210.0 ;
 	public static double camera_angle = CAMERA_ANGLE_FORWARD ;
 	public static double CAMERA_ANGLE_INC = 2.0 ;
+	public static DriveTrain driveTrain;
 
 
 	public static void init() {
@@ -90,6 +96,8 @@ public class RobotMap {
 	        pitch = new WPI_VictorSPX(PITCH_VICTOR_CAN_ID);
 	        lift = new WPI_VictorSPX(LIFT_VICTOR_CAN_ID);
 	        lift.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+	        
+	        pitch_subsystem = new Pitch();
 
 	        left1 = new WPI_VictorSPX(LEFT_1_VICTOR_CAN_ID);
 	        left1.setInverted(false);
@@ -115,6 +123,9 @@ public class RobotMap {
 
 	        differentialDrive = new DifferentialDrive(leftDrive, rightDrive);
 	        
+		driveTrain = new DriveTrain();
+
+	        
 		double diameter = 6.0 ; // inches
 		double revsPerPulse = 500.0 ;
 		double distancePerPulse = Math.PI * diameter / revsPerPulse ;
@@ -133,6 +144,7 @@ public class RobotMap {
 	        // Solenoids
 	        if (use_compressor)
 	        {
+	            System.out.println("compressor");
 	            solenoid = new Solenoid(SHIFTER_SOLENOID_ID);
 	            collector_release = new Solenoid(COLLECTOR_RELEASE_SOLENOID_ID);
 	        }

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team6355.robot;
 
+import org.usfirst.frc.team6355.robot.commands.*;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.cscore.UsbCamera;
@@ -9,6 +11,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -29,19 +32,21 @@ public class Robot extends IterativeRobot {
     
     Preferences prefs;
     
+    public static NetworkTable navx_table ;
+
+    
     @Override
     public void robotInit() {
 	
 	// Preferences
 	prefs = Preferences.getInstance();
-
-	RobotMap.use_compressor = prefs.getBoolean("use_compressor", false);
+//	RobotMap.use_compressor = prefs.getBoolean("use_compressor", false);
 	System.out.println("use compressor prefs: " + RobotMap.use_compressor);
 
 	RobotMap.init();
         
-	pdp = new PowerDistributionPanel(0);
-	pdp.resetTotalEnergy();
+	pdp = new PowerDistributionPanel(0); // need this so we get data in network tables for digital twin
+//	pdp.resetTotalEnergy();
 	SmartDashboard.putData(pdp);
 	
 	// OI must be constructed after subsystems. If the OI creates Commands
@@ -59,6 +64,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	NetworkTable.setServerMode();
+	navx_table = NetworkTable.getTable("navx");
+
 	
 	try {
 	    ahrs = new AHRS(SPI.Port.kMXP);
@@ -79,7 +86,7 @@ public class Robot extends IterativeRobot {
 	double right_rotations =  RobotMap.right_encoder.getDistance() ;
 	
 	double angle = ahrs.getAngle();
-//	System.out.println("=====================angle: " + angle);
+	System.out.println("===================== angle: " + angle);
 //	System.out.println("pdp temp: " + pdp.getTemperature());
 //	System.out.println("pdp total current: " + pdp.getTotalCurrent());
 //	System.out.println("pdp total energy: " + pdp.getTotalEnergy());
@@ -92,7 +99,7 @@ public class Robot extends IterativeRobot {
             RobotMap.differentialDrive.arcadeDrive(OI.joystick.getY(),-OI.joystick.getX());
         }        
         
-	System.out.println("in teleop use compressor prefs: " + RobotMap.use_compressor);
+//	System.out.println("in teleop use compressor prefs: " + RobotMap.use_compressor);
 
         if (RobotMap.use_compressor)
         {
@@ -106,6 +113,8 @@ public class Robot extends IterativeRobot {
         OI.led_wall_selection();
         
         OI.camera_pan();
+        
+        navxToNetworkTables();
                         
 	Scheduler.getInstance().run();
     }
@@ -127,6 +136,13 @@ public class Robot extends IterativeRobot {
 	    }
 	    
 	    System.out.println("game data: " + gameData);
+	    
+	    Command tryingAutonomousCommandGroup = new TryingAutonomousCommandGroup() ;
+	    
+	    tryingAutonomousCommandGroup.start();
+	    
+//	     Command autonomousCommandPitchUpWithLimit = new PitchUpWithLimitCommand();
+//	     autonomousCommandPitchUpWithLimit.start();
 
 	    
 //		driveTrain.resetDistanceMeasures(); // Reset encoders to 0.
@@ -170,6 +186,21 @@ public class Robot extends IterativeRobot {
 	public void robotPeriodic() 
 	{
 //	     System.out.println("Robot.robotPeriodic()");
+	}
+
+	public void navxToNetworkTables() 
+	{
+//	    SmartDashboard.putData(ahrs.getAltitude());
+	    double altitude = ahrs.getAltitude() ;
+	    double navx_pitch = ahrs.getPitch() ;
+	    double navx_roll = ahrs.getRoll() ;
+	    double navx_yaw = ahrs.getYaw() ;
+	    navx_table.putDouble("altitude", altitude );
+	    navx_table.putDouble("navx_pitch", navx_pitch );
+	    navx_table.putDouble("navx_roll", navx_roll );
+	    navx_table.putDouble("navx_yaw", navx_yaw );
+	    System.out.println("getAltitude: " + altitude );
+	    
 	}
 
     

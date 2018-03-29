@@ -16,7 +16,7 @@ public class LiftDownCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	RobotMap.lift.set(-RobotMap.LIFT_SPEED);
+	RobotMap.lift.set(-RobotMap.LIFT_SPEED_DOWN);
     }
 
     // Called repeatedly when this Command is scheduled to run
