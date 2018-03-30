@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  * 
  */
-public class SwitchLeftCommandGroup extends CommandGroup {
+public class AutonomousSwitchCommandGroup extends CommandGroup {
     
     private static final double AUTONOMOUS_DRIVE_FORWARD_INCHES = 0.0;
     private static final double AUTONOMOUS_DRIVE_FORWARD_INCHES_1 = 48.0;
@@ -32,7 +32,7 @@ public class SwitchLeftCommandGroup extends CommandGroup {
     private static final double AUTONOMOUS_DRIVE_FORWARD_INCHES_3 = 24.0;
     private static final double AUTONOMOUS_SECONDS = 3;
     
-    public SwitchLeftCommandGroup() {
+    public AutonomousSwitchCommandGroup() {
     	System.out.println("Autonomous TryingAutonomousCommandGroup command created.");
     	this.addSequential(new PitchDownSecondsCommand(AUTONOMOUS_PITCH_DOWN_SECONDS));
     	this.addSequential(new DriveForwardInchesCommand(AUTONOMOUS_DRIVE_FORWARD_INCHES_1, AUTONOMOUS_DRIVE_SPEED));    	

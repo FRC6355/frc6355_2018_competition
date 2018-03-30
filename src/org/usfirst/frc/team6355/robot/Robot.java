@@ -1,6 +1,7 @@
 package org.usfirst.frc.team6355.robot;
 
 import org.usfirst.frc.team6355.robot.commands.*;
+import org.usfirst.frc.team6355.robot.commands.StraightLeftCommandGroup;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -15,8 +16,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Preferences;
+
+import org.usfirst.frc.team6355.robot.BNO055;
+
 
 @SuppressWarnings("deprecation")
 public class Robot extends IterativeRobot {
@@ -29,8 +34,15 @@ public class Robot extends IterativeRobot {
     Preferences prefs;
     
     public static NetworkTable navx_table ;
-
     
+    Command autonomousCommand;
+    SendableChooser autoChooser;
+
+    private double[] pos = new double[3]; // [x,y,z] position data
+//    private BNO055.CalData cal;
+    public static BNO055 imu;
+
+
     @Override
     public void robotInit() {
 	
@@ -70,6 +82,15 @@ public class Robot extends IterativeRobot {
 	}
 	RobotMap.ahrs.reset();
 	
+    	imu = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS,
+				BNO055.vector_type_t.VECTOR_EULER);
+
+	
+	autoChooser = new SendableChooser() ;
+	autoChooser.addDefault("just go straight from left position", new StraightLeftCommandGroup());
+//	autoChooser.addDefault("just go straight from center position", new StraightCenterCommandGroup());
+//	autoChooser.addDefault("just go straight from right position", new StraightRightCommandGroup());
+	autoChooser.addDefault("go to switch", new AutonomousSwitchCommandGroup());
 
     }
 
@@ -89,6 +110,8 @@ public class Robot extends IterativeRobot {
 //	System.out.println("pdp total power: " + pdp.getTotalPower());
 //	System.out.println("pdp voltage: " + pdp.getVoltage());
 //	System.out.println("gyro: " + gyro.getAngle());
+	
+
 		
 	// Drive
         if (isOperatorControl() && isEnabled()) {
@@ -126,6 +149,10 @@ public class Robot extends IterativeRobot {
         OI.camera_pan();
         
         navxToNetworkTables();
+        
+    	System.out.println("imu heading: " + imu.getHeading());
+    	System.out.println("imu vector: " + imu.getVector()); // [heading, roll, pitch]
+
                         
 	Scheduler.getInstance().run();
     }
@@ -153,9 +180,9 @@ public class Robot extends IterativeRobot {
 //			autonomousCommand.cancel();
 //		
 //		// Get the command that's selected in the chooser.
-//		autonomousCommand = autonomousChooser.getSelected();
-//		if (autonomousCommand != null)
-//			autonomousCommand.start();
+		autonomousCommand = (Command) autoChooser.getSelected();
+		if (autonomousCommand != null)
+			autonomousCommand.start();
 	}
 
 	/**
