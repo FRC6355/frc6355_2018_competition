@@ -111,7 +111,7 @@ public class RobotMap {
 	        left2 = new WPI_VictorSPX(LEFT_2_VICTOR_CAN_ID);
 	        left3 = new WPI_VictorSPX(LEFT_3_VICTOR_CAN_ID);
 	        right1 = new WPI_VictorSPX(RIGHT_1_VICTOR_CAN_ID);
-	        right1.setInverted(false);
+	        right1.setInverted(true);
 	        right2 = new WPI_VictorSPX(RIGHT_2_VICTOR_CAN_ID);
 	        right3 = new WPI_VictorSPX(RIGHT_3_VICTOR_CAN_ID);
 	        left1.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
