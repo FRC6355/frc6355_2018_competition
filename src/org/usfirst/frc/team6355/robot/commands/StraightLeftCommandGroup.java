@@ -25,18 +25,18 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class StraightLeftCommandGroup extends CommandGroup {
     
-    private static final double AUTONOMOUS_DRIVE_FORWARD_INCHES_1 = 48.0;
+    private static final double AUTONOMOUS_DRIVE_FORWARD_INCHES_1 = 144.0;
     private static final double AUTONOMOUS_DRIVE_FORWARD_INCHES_2 = 24.0;
-    private static final double AUTONOMOUS_DRIVE_SPEED = 0.4;
+    private static final double AUTONOMOUS_DRIVE_SPEED = 0.8;
     private static final double AUTONOMOUS_PITCH_UP_SECONDS = 0.5;
-    private static final double AUTONOMOUS_PITCH_DOWN_SECONDS = 0.5;
+    private static final double AUTONOMOUS_PITCH_DOWN_SECONDS = 0.75;
     private static final double AUTONOMOUS_COLLECTOR_FORWARD_SECONDS = 0.5;
     private static final double AUTONOMOUS_COLLECTOR_BACKWARD_SECONDS = 0.2;
     private static final double AUTONOMOUS_LIFT_UP_SECONDS = 0.5;
     private static final double AUTONOMOUS_LIFT_DOWN_SECONDS = 0.5;
-    private static final double AUTONOMOUS_TURN_SECONDS = 1.0;
-    private static final double AUTONOMOUS_TURN_VALUE_1 = -1.0;
-    private static final double AUTONOMOUS_TURN_VALUE_2 = 1.0;
+    private static final double AUTONOMOUS_TURN_SECONDS = 2.5;
+    private static final double AUTONOMOUS_TURN_VALUE_1 = -0.5;
+    private static final double AUTONOMOUS_TURN_VALUE_2 = 0.5;
     private static final double AUTONOMOUS_DRIVE_FORWARD_INCHES_3 = 168.0;
 
 
@@ -44,12 +44,14 @@ public class StraightLeftCommandGroup extends CommandGroup {
     public StraightLeftCommandGroup() {
     	System.out.println("Autonomous TryingAutonomousCommandGroup command created.");
     	this.addSequential(new PitchDownSecondsCommand(AUTONOMOUS_PITCH_DOWN_SECONDS));
+    	System.out.println("Autonomous drive forward.");
     	this.addSequential(new DriveForwardInchesCommand(AUTONOMOUS_DRIVE_FORWARD_INCHES_1, AUTONOMOUS_DRIVE_SPEED));    	
-    	this.addSequential(new TurnSecondsCommand(AUTONOMOUS_TURN_SECONDS, AUTONOMOUS_TURN_VALUE_1));
-    	this.addSequential(new DriveForwardInchesCommand(AUTONOMOUS_DRIVE_FORWARD_INCHES_2, AUTONOMOUS_DRIVE_SPEED));  
-    	this.addSequential(new TurnSecondsCommand(AUTONOMOUS_TURN_SECONDS, AUTONOMOUS_TURN_VALUE_2));
-    	this.addSequential(new DriveForwardInchesCommand(AUTONOMOUS_DRIVE_FORWARD_INCHES_3, AUTONOMOUS_DRIVE_SPEED));  
-
+//    	System.out.println("turn forward.");
+//    	this.addSequential(new TurnSecondsCommand(AUTONOMOUS_TURN_SECONDS, AUTONOMOUS_TURN_VALUE_1));
+//    	this.addSequential(new DriveForwardInchesCommand(AUTONOMOUS_DRIVE_FORWARD_INCHES_2, AUTONOMOUS_DRIVE_SPEED));  
+//    	this.addSequential(new TurnSecondsCommand(AUTONOMOUS_TURN_SECONDS, AUTONOMOUS_TURN_VALUE_2));
+//    	this.addSequential(new DriveForwardInchesCommand(AUTONOMOUS_DRIVE_FORWARD_INCHES_3, AUTONOMOUS_DRIVE_SPEED));  
+//
 
 
 

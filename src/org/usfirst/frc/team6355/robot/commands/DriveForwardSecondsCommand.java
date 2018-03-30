@@ -25,7 +25,9 @@ public class DriveForwardSecondsCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	// Reset the navx and turn assist.
+	setTimeout(Robot.timeout);
+	
+   	// Reset the navx and turn assist.
 	RobotMap.driveTrain.Stop();
     }
 
@@ -35,7 +37,12 @@ public class DriveForwardSecondsCommand extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+    protected boolean isFinished()
+    {
+	
+	if (isTimedOut())
+	    return true;
+		    
     	double currentTime = Timer.getFPGATimestamp();
     	if (startTime + driveSeconds < currentTime){
 		return true;

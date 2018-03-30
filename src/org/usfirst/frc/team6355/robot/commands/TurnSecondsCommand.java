@@ -19,7 +19,8 @@ public class TurnSecondsCommand extends Command {
 	
     public TurnSecondsCommand(double seconds, double rotateValue)
     {
-    	requires(RobotMap.driveTrain);
+
+	requires(RobotMap.driveTrain);
     	driveSeconds = seconds;
     	driveRotateValue = rotateValue;
     }
@@ -27,7 +28,10 @@ public class TurnSecondsCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	// Reset the navx and turn assist.
+	setTimeout(Robot.timeout);
 	RobotMap.driveTrain.Stop();
+	startTime = Timer.getFPGATimestamp();
+
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -37,8 +41,11 @@ public class TurnSecondsCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double currentTime = Timer.getFPGATimestamp();
-    	if (startTime + driveSeconds < currentTime){
+	if (isTimedOut())
+	    return true;
+
+	double currentTime = Timer.getFPGATimestamp();
+    	if ((currentTime - startTime) > driveSeconds ){
 		return true;
 	}    		
     	return false;

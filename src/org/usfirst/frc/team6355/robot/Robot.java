@@ -29,6 +29,8 @@ public class Robot extends IterativeRobot {
     Preferences prefs;
     
     public static NetworkTable navx_table ;
+    
+    public static double timeout = 15.0;
 
     
     @Override
@@ -121,9 +123,9 @@ public class Robot extends IterativeRobot {
 	    
 	
 	    
-//	    Command tryingAutonomousCommandGroup = new StraightLeftCommandGroup() ;
-//	    
-//	    tryingAutonomousCommandGroup.start();
+	    Command tryingAutonomousCommandGroup = new StraightLeftCommandGroup() ;
+	    
+	    tryingAutonomousCommandGroup.start();
 	    
 //	     Command autonomousCommandPitchUpWithLimit = new PitchUpWithLimitCommand();
 //	     autonomousCommandPitchUpWithLimit.start();

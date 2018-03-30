@@ -1,5 +1,6 @@
 package org.usfirst.frc.team6355.robot.commands;
 
+import org.usfirst.frc.team6355.robot.Robot;
 import org.usfirst.frc.team6355.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -22,6 +23,8 @@ public class CollectorForwardSecondsCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+	setTimeout(Robot.timeout);
+
 	startTime = Timer.getFPGATimestamp();	// seconds.
 	RobotMap.collector.set(-RobotMap.COLLECTOR_SPEED_FORWARD);
     }
@@ -31,6 +34,9 @@ public class CollectorForwardSecondsCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+	if (isTimedOut())
+	    return true;
+		    
     	double currentTime = Timer.getFPGATimestamp();
     	if (startTime + collectorSeconds < currentTime){
 		return true;

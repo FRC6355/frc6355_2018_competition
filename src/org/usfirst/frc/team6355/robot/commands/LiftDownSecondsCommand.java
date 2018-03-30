@@ -1,5 +1,6 @@
 package org.usfirst.frc.team6355.robot.commands;
 
+import org.usfirst.frc.team6355.robot.Robot;
 import org.usfirst.frc.team6355.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -21,6 +22,8 @@ public class LiftDownSecondsCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+	setTimeout(Robot.timeout);
+
 	startTime = Timer.getFPGATimestamp();	// seconds.
 	RobotMap.lift.set(-RobotMap.LIFT_SPEED_DOWN);
     }
@@ -31,7 +34,10 @@ public class LiftDownSecondsCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double currentTime = Timer.getFPGATimestamp();
+	if (isTimedOut())
+	    return true;
+	
+	double currentTime = Timer.getFPGATimestamp();
     	if (startTime + liftSeconds < currentTime){
 		return true;
 	}    		

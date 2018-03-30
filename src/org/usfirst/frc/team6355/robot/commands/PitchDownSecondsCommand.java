@@ -1,5 +1,6 @@
 package org.usfirst.frc.team6355.robot.commands;
 
+import org.usfirst.frc.team6355.robot.Robot;
 import org.usfirst.frc.team6355.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -23,6 +24,8 @@ public class PitchDownSecondsCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+	setTimeout(Robot.timeout);
+
 	startTime = Timer.getFPGATimestamp();	// seconds.
 	RobotMap.pitch.set(-RobotMap.PITCH_SPEED);
     }
@@ -33,7 +36,10 @@ public class PitchDownSecondsCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double currentTime = Timer.getFPGATimestamp();
+	if (isTimedOut())
+	    return true;
+
+	double currentTime = Timer.getFPGATimestamp();
     	if (startTime + pitchSeconds < currentTime){
 		return true;
 	}    	

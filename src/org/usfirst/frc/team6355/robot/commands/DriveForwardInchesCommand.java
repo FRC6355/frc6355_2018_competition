@@ -26,6 +26,8 @@ public class DriveForwardInchesCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	// Reset the navx and turn assist.
+	setTimeout(Robot.timeout);
+	
 	RobotMap.driveTrain.Stop();
 
 	startDistance = RobotMap.driveTrain.getWheelDistanceAverage();
@@ -40,6 +42,10 @@ public class DriveForwardInchesCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+	
+	if (isTimedOut())
+	    return true;
+	
     	double currentDistance = RobotMap.driveTrain.getWheelDistanceAverage();
     	double distanceDelta = Math.abs(currentDistance - startDistance);
     	
