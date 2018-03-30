@@ -43,7 +43,7 @@ public class StraightLeftCommandGroup extends CommandGroup {
     
     public StraightLeftCommandGroup() {
     	System.out.println("Autonomous TryingAutonomousCommandGroup command created.");
-    	this.addSequential(new PitchDownSecondsCommand(AUTONOMOUS_PITCH_DOWN_SECONDS));
+//    	this.addSequential(new PitchDownSecondsCommand(AUTONOMOUS_PITCH_DOWN_SECONDS));
     	this.addSequential(new DriveForwardInchesCommand(AUTONOMOUS_DRIVE_FORWARD_INCHES_1, AUTONOMOUS_DRIVE_SPEED));    	
     	this.addSequential(new TurnSecondsCommand(AUTONOMOUS_TURN_SECONDS, AUTONOMOUS_TURN_VALUE_1));
     	this.addSequential(new DriveForwardInchesCommand(AUTONOMOUS_DRIVE_FORWARD_INCHES_2, AUTONOMOUS_DRIVE_SPEED));  

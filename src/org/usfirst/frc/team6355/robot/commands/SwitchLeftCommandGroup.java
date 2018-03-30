@@ -37,7 +37,7 @@ public class SwitchLeftCommandGroup extends CommandGroup {
     	this.addSequential(new PitchDownSecondsCommand(AUTONOMOUS_PITCH_DOWN_SECONDS));
     	this.addSequential(new DriveForwardInchesCommand(AUTONOMOUS_DRIVE_FORWARD_INCHES_1, AUTONOMOUS_DRIVE_SPEED));    	
     	this.addSequential(new AutonomousTurn1Command(AUTONOMOUS_TURN_SECONDS, AUTONOMOUS_TURN_VALUE));
-    	this.addSequential(new AutonomousCrossFieldCommand(AUTONOMOUS_DRIVE_FORWARD_INCHES, AUTONOMOUS_DRIVE_SPEED));  
+    	this.addSequential(new AutonomousCrossFieldCommand(AUTONOMOUS_DRIVE_SPEED));  
     	this.addSequential(new AutonomousTurn2Command(AUTONOMOUS_TURN_SECONDS, AUTONOMOUS_TURN_VALUE));
     	this.addSequential(new DriveForwardInchesCommand(AUTONOMOUS_DRIVE_FORWARD_INCHES_2, AUTONOMOUS_DRIVE_SPEED));  
     	this.addSequential(new AutonomousTurn3Command(AUTONOMOUS_TURN_SECONDS, AUTONOMOUS_TURN_VALUE));

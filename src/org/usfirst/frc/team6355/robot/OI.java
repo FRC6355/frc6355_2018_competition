@@ -65,10 +65,10 @@ public class OI {
     // Motors
     private static final int PITCH_UP_BUTTON = 6;
     private static final int PITCH_DOWN_BUTTON = 4;
-    private static final int COLLECTOR_FORWARD_BUTTON = 11;
-    private static final int COLLECTOR_BACKWARD_BUTTON = 12;
-    private static final int LIFT_UP_BUTTON = 7;
-    private static final int LIFT_DOWN_BUTTON = 8;
+    private static final int COLLECTOR_FORWARD_BUTTON = 7;
+    private static final int COLLECTOR_BACKWARD_BUTTON = 8;
+    private static final int LIFT_UP_BUTTON = 4;
+    private static final int LIFT_DOWN_BUTTON = 6;
     private JoystickButton pitchUpButton, pitchDownButton;
     private JoystickButton liftUpButton, liftDownButton;
     private JoystickButton collectorForwardButton, collectorBackwardButton;
@@ -100,10 +100,10 @@ public class OI {
         buttonBox = new Joystick(1);
         
         // Pitch
-        pitchUpButton = new JoystickButton(joystick, PITCH_UP_BUTTON);
-        pitchDownButton = new JoystickButton(joystick, PITCH_DOWN_BUTTON);
-        pitchUpButton.whileHeld(new PitchUpCommand());
-        pitchDownButton.whileHeld(new PitchDownCommand());
+//        pitchUpButton = new JoystickButton(joystick, PITCH_UP_BUTTON);
+//        pitchDownButton = new JoystickButton(joystick, PITCH_DOWN_BUTTON);
+//        pitchUpButton.whileHeld(new PitchUpCommand());
+//        pitchDownButton.whileHeld(new PitchDownCommand());
 
         // Collector
         collectorForwardButton = new JoystickButton(joystick, COLLECTOR_FORWARD_BUTTON);

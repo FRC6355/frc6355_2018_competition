@@ -1,4 +1,5 @@
 package org.usfirst.frc.team6355.robot.commands;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team6355.robot.Robot;
 import org.usfirst.frc.team6355.robot.RobotMap;
@@ -16,10 +17,9 @@ public class AutonomousCrossFieldCommand extends Command {
 	private double driveForwardMagnitude = 0.0;
 	
 	
-    public AutonomousCrossFieldCommand(double inchesToDriveForward, double forwardMagnitude) {
+    public AutonomousCrossFieldCommand(double forwardMagnitude) {
     	requires(RobotMap.driveTrain);
     	System.out.println("Drive Fwd Inches created.");
-    	driveForwardInches = inchesToDriveForward;
     	driveForwardMagnitude = forwardMagnitude;
     }
 
@@ -27,6 +27,43 @@ public class AutonomousCrossFieldCommand extends Command {
     protected void initialize() {
     	// Reset the navx and turn assist.
 	RobotMap.driveTrain.Stop();
+	    String gameData;
+	    int location;
+	    DriverStation ds = DriverStation.getInstance();
+	    location = ds.getLocation();
+	    gameData = ds.getGameSpecificMessage();
+	    
+	    if(gameData.length() > 0)
+	    {
+		  if(gameData.charAt(0) == 'L')
+		  {
+		      if ( location == 1 ) // so robot on left side
+		      {
+			  driveForwardInches = 12 * 20 ; // change 20 to the number of feet it has to drive
+		      }
+		      else if ( location == 2) // robot in middle
+		      {
+			  driveForwardInches = 12 * 20 ; // change 20 to the number of feet it has to drive			  
+		      }
+		      else if ( location == 3 ) // robot on right side
+		      {
+			  driveForwardInches = 12 * 20 ; // change 20 to the number of feet it has to drive			  
+		      }
+		  } else { // game Data says switch on right side
+		      if ( location == 1 )
+		      {
+			  driveForwardInches = 12 * 20 ; // change 20 to the number of feet it has to drive			  
+		      }
+		      else if ( location == 2 )
+		      {
+			  driveForwardInches = 12 * 20 ; // change 20 to the number of feet it has to drive			  
+		      }
+		      else if ( location == 3 )
+		      {
+			  driveForwardInches = 12 * 20 ; // change 20 to the number of feet it has to drive			  
+		      }
+		  }
+	    }
 
 	startDistance = RobotMap.driveTrain.getWheelDistanceAverage();
 		
@@ -44,10 +81,6 @@ public class AutonomousCrossFieldCommand extends Command {
     	double distanceDelta = Math.abs(currentDistance - startDistance);
     	
     	if (distanceDelta > Math.abs(driveForwardInches)){
-        	System.out.println("Drive Fwd Inches finished. StartDistance: " 
-        									+ startDistance + " DriveInches: "
-        									+ driveForwardInches + " CurrentDistance: "
-        									+ currentDistance);
     		return true;
     	}    	
     	

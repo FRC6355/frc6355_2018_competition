@@ -92,8 +92,23 @@ public class Robot extends IterativeRobot {
 		
 	// Drive
         if (isOperatorControl() && isEnabled()) {
-            RobotMap.differentialDrive.arcadeDrive(OI.joystick.getY(),-OI.joystick.getX());
+            RobotMap.differentialDrive.arcadeDrive(-OI.joystick.getY(),OI.joystick.getX());
         }        
+        
+        if (oi.joystick.getThrottle() > 0.7 )
+        {
+    		RobotMap.pitch.set(-RobotMap.PITCH_SPEED);
+        }
+        else if (oi.joystick.getThrottle() <  - 0.7 )
+        {
+		RobotMap.pitch.set(RobotMap.PITCH_SPEED);
+        }
+        else
+        {
+		RobotMap.pitch.set(0.0);
+        }
+
+        
         
 //	System.out.println("in teleop use compressor prefs: " + RobotMap.use_compressor);
 
@@ -121,9 +136,9 @@ public class Robot extends IterativeRobot {
 	    
 	
 	    
-	    Command tryingAutonomousCommandGroup = new StraightLeftCommandGroup() ;
+//	    Command tryingAutonomousCommandGroup = new StraightLeftCommandGroup() ;
 	    
-	    tryingAutonomousCommandGroup.start();
+//	    tryingAutonomousCommandGroup.start();
 	    
 //	     Command autonomousCommandPitchUpWithLimit = new PitchUpWithLimitCommand();
 //	     autonomousCommandPitchUpWithLimit.start();
