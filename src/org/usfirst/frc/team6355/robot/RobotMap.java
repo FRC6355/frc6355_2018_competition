@@ -100,7 +100,9 @@ public class RobotMap {
 	public static void init() {
 		
 	        collector = new WPI_VictorSPX(COLLECTOR_VICTOR_CAN_ID);
+	        collector.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 	        pitch = new WPI_VictorSPX(PITCH_VICTOR_CAN_ID);
+	        pitch.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 	        lift = new WPI_VictorSPX(LIFT_VICTOR_CAN_ID);
 	        lift.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 	        
@@ -114,6 +116,13 @@ public class RobotMap {
 	        right1.setInverted(true);
 	        right2 = new WPI_VictorSPX(RIGHT_2_VICTOR_CAN_ID);
 	        right3 = new WPI_VictorSPX(RIGHT_3_VICTOR_CAN_ID);
+	        left1.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+	        left2.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+	        left3.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+	        right1.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+	        right2.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+	        right3.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+
 	        left1.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
 	        left2.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
 	        left3.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
