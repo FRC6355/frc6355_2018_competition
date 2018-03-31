@@ -71,7 +71,7 @@ public class OI {
     private static final int LIFT_DOWN_BUTTON = 8;
     private JoystickButton pitchUpButton, pitchDownButton;
     private JoystickButton liftUpButton, liftDownButton;
-    private JoystickButton collectorForwardButton, collectorBackwardButton;
+    private JoystickButton collectorForwardButton, collectorBackwardButton, collectorReleaseButton;
     
     // Button box
     private static final int BUTTON_BOX_PURPLE = 1;
@@ -110,6 +110,11 @@ public class OI {
         collectorBackwardButton = new JoystickButton(joystick, COLLECTOR_BACKWARD_BUTTON);
         collectorForwardButton.whileHeld(new CollectorForwardCommand());
         collectorBackwardButton.whileHeld(new CollectorBackwardCommand());
+        
+//        
+//        collectorReleaseButton = new JoystickButton(joystick, COLLECTOR_RELEASE_BUTTON);
+//        collectorReleaseButton.toggleWhenPressed(new CollectorOpenCloseCommand());
+
 
         // Lift
         liftUpButton = new JoystickButton(joystick, LIFT_UP_BUTTON);

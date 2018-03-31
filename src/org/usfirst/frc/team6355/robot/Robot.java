@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Preferences;
 
@@ -31,7 +32,8 @@ public class Robot extends IterativeRobot {
     public static NetworkTable navx_table ;
     
     public static double timeout = 15.0;
-
+    Command autonomousCommand;
+    SendableChooser autoChooser;
     
     @Override
     public void robotInit() {
@@ -45,7 +47,7 @@ public class Robot extends IterativeRobot {
         
 	pdp = new PowerDistributionPanel(0); // need this so we get data in network tables for digital twin
 //	pdp.resetTotalEnergy();
-	SmartDashboard.putData(pdp);
+//	SmartDashboard.putData(pdp);
 	
 	// OI must be constructed after subsystems. If the OI creates Commands
 	// (which it very likely will), subsystems are not guaranteed to be
@@ -72,6 +74,11 @@ public class Robot extends IterativeRobot {
 	}
 	RobotMap.ahrs.reset();
 	
+	autoChooser = new SendableChooser();
+	autoChooser.addDefault("Autonomous Straight Sides", new StraightLeftCommandGroup());
+	autoChooser.addObject("Autonomous Straight Center", new StraightCenterCommandGroup());
+	SmartDashboard.putData("Auto_Mode_Chooser", autoChooser);
+
 
     }
 
@@ -94,7 +101,14 @@ public class Robot extends IterativeRobot {
 		
 	// Drive
         if (isOperatorControl() && isEnabled()) {
-            RobotMap.differentialDrive.arcadeDrive(-OI.joystick.getY(),OI.joystick.getX());
+            if ( Math.abs(OI.joystick.getY()) < 0.1 && Math.abs(OI.joystick.getZ()) < 0.1)
+            {
+        	RobotMap.differentialDrive.stopMotor();
+            }
+            else
+            {
+                RobotMap.differentialDrive.arcadeDrive(-OI.joystick.getY(),OI.joystick.getZ());        	
+            }
         }        
         
 //	System.out.println("in teleop use compressor prefs: " + RobotMap.use_compressor);
@@ -123,9 +137,10 @@ public class Robot extends IterativeRobot {
 	    
 	
 	    
-	    Command tryingAutonomousCommandGroup = new StraightLeftCommandGroup() ;
+//	    Command tryingAutonomousCommandGroup = new StraightLeftCommandGroup() ;
+//	    Command tryingAutonomousCommandGroup = new StraightCenterCommandGroup() ;
 	    
-	    tryingAutonomousCommandGroup.start();
+//	    tryingAutonomousCommandGroup.start();
 	    
 //	     Command autonomousCommandPitchUpWithLimit = new PitchUpWithLimitCommand();
 //	     autonomousCommandPitchUpWithLimit.start();
@@ -140,9 +155,9 @@ public class Robot extends IterativeRobot {
 //			autonomousCommand.cancel();
 //		
 //		// Get the command that's selected in the chooser.
-//		autonomousCommand = autonomousChooser.getSelected();
-//		if (autonomousCommand != null)
-//			autonomousCommand.start();
+		autonomousCommand = (Command) autoChooser.getSelected();
+		if (autonomousCommand != null)
+			autonomousCommand.start();
 	}
 
 	/**

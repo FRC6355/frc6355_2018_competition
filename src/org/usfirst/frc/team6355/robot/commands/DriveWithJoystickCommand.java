@@ -48,7 +48,7 @@ public class DriveWithJoystickCommand extends Command {
     protected void execute() {
     	// Robot.driveTrain.arcadeDriveForwardOnly(Robot.oi.getJoystick());
 //    	RobotMap.driveTrainPID.arcadeDrive(Robot.oi.getJoystick());
-        RobotMap.differentialDrive.arcadeDrive(OI.joystick.getY(),-OI.joystick.getX());
+        RobotMap.differentialDrive.arcadeDrive(-OI.joystick.getY(),OI.joystick.getX());
 
         SmartDashboard.putNumber(   "Joystick X",              Robot.oi.getJoystick().getAxis(AxisType.kX));
         SmartDashboard.putNumber(   "Joystick Y",              Robot.oi.getJoystick().getAxis(AxisType.kY));

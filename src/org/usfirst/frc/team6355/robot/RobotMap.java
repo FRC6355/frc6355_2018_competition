@@ -123,12 +123,12 @@ public class RobotMap {
 	        right2.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 	        right3.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 
-	        left1.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
-	        left2.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
-	        left3.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
-	        right1.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
-	        right2.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
-	        right3.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+//	        left1.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+//	        left2.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+//	        left3.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+//	        right1.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+//	        right2.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
+//	        right3.configOpenloopRamp(DRIVE_MOTOR_OPEN_LOOP_RAMP, 0);
 	        
 	        leftDrive = new SpeedControllerGroup(left1, left2, left3);
 	        rightDrive = new SpeedControllerGroup(right1, right2, right3);
