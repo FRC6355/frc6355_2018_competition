@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot {
 
 	RobotMap.init();
         
-	pdp = new PowerDistributionPanel(0); // need this so we get data in network tables for digital twin
+//	pdp = new PowerDistributionPanel(0); // need this so we get data in network tables for digital twin
 //	pdp.resetTotalEnergy();
 //	SmartDashboard.putData(pdp);
 	
@@ -114,17 +114,29 @@ public class Robot extends IterativeRobot {
 //	System.out.println("gyro: " + gyro.getAngle());
 		
 	// Drive
-        if (isOperatorControl() && isEnabled()) {
-            if ( Math.abs(OI.joystick.getY()) < 0.1 && Math.abs(OI.joystick.getZ()) < 0.1)
-            {
-        	RobotMap.differentialDrive.stopMotor();
-            }
-            else
-            {
-                RobotMap.differentialDrive.arcadeDrive(-OI.joystick.getY(),OI.joystick.getZ());        	
-            }
-        }        
+//        if (isOperatorControl() && isEnabled()) {
+//            if ( Math.abs(OI.joystick.getY()) < 0.1 && Math.abs(OI.joystick.getZ()) < 0.1)
+//            {
+//        	RobotMap.differentialDrive.stopMotor();
+//            }
+//            else
+//            {
+//                RobotMap.differentialDrive.arcadeDrive(-OI.joystick.getY(),OI.joystick.getZ());        	
+//            }
+//        }        
         
+	 if (isOperatorControl() && isEnabled()) {
+           if ( Math.abs(OI.xbox.getY(Hand.kLeft)) < 0.1 && Math.abs(OI.xbox.getX(Hand.kLeft)) < 0.1)
+           {
+               RobotMap.differentialDrive.stopMotor();
+           }
+           else
+           {
+               RobotMap.differentialDrive.arcadeDrive(-OI.xbox.getY(Hand.kLeft),OI.xbox.getX(Hand.kLeft));        	
+     	
+           }
+       }        
+	 
 //	System.out.println("in teleop use compressor prefs: " + RobotMap.use_compressor);
 
         if (RobotMap.use_compressor)
@@ -133,8 +145,10 @@ public class Robot extends IterativeRobot {
             RobotMap.solenoid.set(OI.joystick.getRawButton(OI.SHIFT_BUTTON));
         
             // Collect
-            RobotMap.collector_release.set(OI.joystick.getRawButton(OI.COLLECTOR_RELEASE_BUTTON));
+//            RobotMap.collector_release.set(OI.joystick.getRawButton(OI.COLLECTOR_RELEASE_BUTTON));
+            RobotMap.collector_release.set(!OI.xbox.getAButton());
         }
+        
         
         OI.led_wall_selection();
         
@@ -147,8 +161,23 @@ public class Robot extends IterativeRobot {
 //    	System.out.println("imu vector: " + imu.getVector()); // [heading, roll, pitch]
 
         
-//	RobotMap.pitch.set(OI.xbox.getY(Hand.kRight));
+        // Xbox
+	RobotMap.pitch.set(-OI.xbox.getY(Hand.kRight));
+	RobotMap.lift.set(OI.xbox.getTriggerAxis(Hand.kRight));
+	RobotMap.lift.set(-OI.xbox.getTriggerAxis(Hand.kLeft));
 
+	if (OI.xbox.getBumper(Hand.kRight))
+	{
+	    RobotMap.collector.set(RobotMap.COLLECTOR_SPEED_BACKWARD_LEFT);
+	}
+	else if (OI.xbox.getBumper(Hand.kLeft))
+	{
+	    RobotMap.collector.set(-RobotMap.COLLECTOR_SPEED_BACKWARD_LEFT);
+	}
+	else
+	{
+	    RobotMap.collector.stopMotor();	    
+	}
                         
 	Scheduler.getInstance().run();
     }
@@ -157,12 +186,13 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
 	    
+        RobotMap.collector_release.set(true);
 	
 	    
-//	    Command tryingAutonomousCommandGroup = new StraightLeftCommandGroup() ;
+	    Command tryingAutonomousCommandGroup = new StraightLeftCommandGroup() ;
 //	    Command tryingAutonomousCommandGroup = new StraightCenterCommandGroup() ;
 	    
-//	    tryingAutonomousCommandGroup.start();
+	    tryingAutonomousCommandGroup.start();
 	    
 //	     Command autonomousCommandPitchUpWithLimit = new PitchUpWithLimitCommand();
 //	     autonomousCommandPitchUpWithLimit.start();
@@ -177,9 +207,9 @@ public class Robot extends IterativeRobot {
 //			autonomousCommand.cancel();
 //		
 //		// Get the command that's selected in the chooser.
-		autonomousCommand = (Command) autoChooser.getSelected();
-		if (autonomousCommand != null)
-			autonomousCommand.start();
+//		autonomousCommand = (Command) autoChooser.getSelected();
+//		if (autonomousCommand != null)
+//			autonomousCommand.start();
 	}
 
 	/**

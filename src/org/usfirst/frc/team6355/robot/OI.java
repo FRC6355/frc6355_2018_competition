@@ -15,6 +15,7 @@ import org.usfirst.frc.team6355.robot.commands.*;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
@@ -103,10 +104,10 @@ public class OI {
         xbox = new XboxController(2);
         
         // Pitch
-        pitchUpButton = new JoystickButton(joystick, PITCH_UP_BUTTON);
-        pitchDownButton = new JoystickButton(joystick, PITCH_DOWN_BUTTON);
-        pitchUpButton.whileHeld(new PitchUpCommand());
-        pitchDownButton.whileHeld(new PitchDownCommand());
+//        pitchUpButton = new JoystickButton(joystick, PITCH_UP_BUTTON);
+//        pitchDownButton = new JoystickButton(joystick, PITCH_DOWN_BUTTON);
+//        pitchUpButton.whileHeld(new PitchUpCommand());
+//        pitchDownButton.whileHeld(new PitchDownCommand());
 
         // Collector
         collectorForwardButton = new JoystickButton(joystick, COLLECTOR_FORWARD_BUTTON);
@@ -167,28 +168,37 @@ public class OI {
     
     static void camera_pan()
     {
-        pov = joystick.getPOV();
-        if (pov == 90) // joystick right
-        {
-            if (RobotMap.camera_angle + RobotMap.CAMERA_ANGLE_INC < RobotMap.CAMERA_ANGLE_RIGHT )
-            {
-        	RobotMap.camera_angle += RobotMap.CAMERA_ANGLE_INC;
-        	RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
-            }
-        }
-        else if (pov == 270)
-    	{
-            if (RobotMap.camera_angle - RobotMap.CAMERA_ANGLE_INC > RobotMap.CAMERA_ANGLE_LEFT )
-            {
-        	RobotMap.camera_angle -= RobotMap.CAMERA_ANGLE_INC;
-        	RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
-            }
-    	}
-        else if (pov == 0)
-    	{
-            RobotMap.camera_angle = RobotMap.CAMERA_ANGLE_LEFT ;
-	    RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
-    	}
+	
+	double xbox_output = OI.xbox.getX(Hand.kRight);
+	double camera_angle = 0.0 ;
+	
+	camera_angle = 180.0 * xbox_output + RobotMap.CAMERA_ANGLE_FORWARD ;
+	if ( RobotMap.CAMERA_ANGLE_LEFT < camera_angle && camera_angle < RobotMap.CAMERA_ANGLE_RIGHT)
+	{
+	    RobotMap.cameraServo.setAngle( camera_angle );
+	}
+//        pov = joystick.getPOV();
+//        if (pov == 90) // joystick right
+//        {
+//            if (RobotMap.camera_angle + RobotMap.CAMERA_ANGLE_INC < RobotMap.CAMERA_ANGLE_RIGHT )
+//            {
+//        	RobotMap.camera_angle += RobotMap.CAMERA_ANGLE_INC;
+//        	RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
+//            }
+//        }
+//        else if (pov == 270)
+//    	{
+//            if (RobotMap.camera_angle - RobotMap.CAMERA_ANGLE_INC > RobotMap.CAMERA_ANGLE_LEFT )
+//            {
+//        	RobotMap.camera_angle -= RobotMap.CAMERA_ANGLE_INC;
+//        	RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
+//            }
+//    	}
+//        else if (pov == 0)
+//    	{
+//            RobotMap.camera_angle = RobotMap.CAMERA_ANGLE_LEFT ;
+//	    RobotMap.cameraServo.setAngle(RobotMap.camera_angle);
+//    	}
 
     }
 
