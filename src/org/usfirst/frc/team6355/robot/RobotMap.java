@@ -72,7 +72,8 @@ public class RobotMap {
 	private static final int PITCH_VICTOR_CAN_ID = 5;
 	private static final int LIFT_VICTOR_CAN_ID = 7;
 
-	public static double COLLECTOR_SPEED_BACKWARD = 0.5;
+	public static double COLLECTOR_SPEED_BACKWARD_LEFT = 0.5;
+	public static double COLLECTOR_SPEED_BACKWARD_RIGHT = 0.5;
 	public static double COLLECTOR_SPEED_FORWARD = 1.0;
 	public static double PITCH_SPEED = 0.75;
 	public static double LIFT_SPEED_UP = 0.30;

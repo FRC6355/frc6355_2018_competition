@@ -14,6 +14,7 @@ package org.usfirst.frc.team6355.robot;
 import org.usfirst.frc.team6355.robot.commands.*;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
@@ -56,6 +57,7 @@ public class OI {
     
     public static Joystick joystick;
     public static Joystick buttonBox;
+    public static XboxController xbox;
 
     // Solenoids
     public static final int SHIFT_BUTTON = 5;
@@ -98,6 +100,7 @@ public class OI {
 
         joystick = new Joystick(0);
         buttonBox = new Joystick(1);
+        xbox = new XboxController(2);
         
         // Pitch
         pitchUpButton = new JoystickButton(joystick, PITCH_UP_BUTTON);

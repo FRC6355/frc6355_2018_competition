@@ -7,6 +7,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 //import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -144,6 +145,9 @@ public class Robot extends IterativeRobot {
         // BNO005
 //    	System.out.println("imu heading: " + imu.getHeading());
 //    	System.out.println("imu vector: " + imu.getVector()); // [heading, roll, pitch]
+
+        
+//	RobotMap.pitch.set(OI.xbox.getY(Hand.kRight));
 
                         
 	Scheduler.getInstance().run();

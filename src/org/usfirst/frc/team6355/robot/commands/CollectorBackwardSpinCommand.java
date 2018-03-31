@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CollectorBackwardCommand extends Command {
+public class CollectorBackwardSpinCommand extends Command {
 
-    public CollectorBackwardCommand() {
+    public CollectorBackwardSpinCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
