@@ -19,6 +19,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Preferences;
 
+//import org.usfirst.frc.team6355.robot.BNO055;
+
+
 @SuppressWarnings("deprecation")
 public class Robot extends IterativeRobot {
     
@@ -32,8 +35,14 @@ public class Robot extends IterativeRobot {
     public static NetworkTable navx_table ;
     
     public static double timeout = 15.0;
+
     Command autonomousCommand;
     SendableChooser autoChooser;
+    
+    // BNO055
+//    private double[] pos = new double[3]; // [x,y,z] position data
+//    public static BNO055 imu;
+
     
     @Override
     public void robotInit() {
@@ -78,6 +87,10 @@ public class Robot extends IterativeRobot {
 	autoChooser.addDefault("Autonomous Straight Sides", new StraightLeftCommandGroup());
 	autoChooser.addObject("Autonomous Straight Center", new StraightCenterCommandGroup());
 	SmartDashboard.putData("Auto_Mode_Chooser", autoChooser);
+
+	// BNO055
+//    	imu = BNO055.getInstance(BNO055.opmode_t.OPERATION_MODE_IMUPLUS,
+//				BNO055.vector_type_t.VECTOR_EULER);
 
 
     }
@@ -127,6 +140,11 @@ public class Robot extends IterativeRobot {
         OI.camera_pan();
         
         navxToNetworkTables();
+        
+        // BNO005
+//    	System.out.println("imu heading: " + imu.getHeading());
+//    	System.out.println("imu vector: " + imu.getVector()); // [heading, roll, pitch]
+
                         
 	Scheduler.getInstance().run();
     }
